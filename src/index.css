@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --header-h: 76px;
+    color-scheme: light;
+  }
+  html, body { overflow-x: clip; }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--header-h) + 16px);
+  }
+  body {
+    @apply bg-stone-50 font-sans text-ink-900;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight text-balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { @apply bg-gold-200 text-ink-900; }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.gold.400');
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .on-dark :focus-visible { outline-color: theme('colors.gold.300'); }
+
+  /* Respect users who prefer less motion: stop CSS-driven motion entirely. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-3 font-sans text-[0.72rem] font-semibold uppercase tracking-eyebrow text-gold-500;
+  }
+  .eyebrow::before {
+    content: '';
+    @apply block h-px w-8 bg-current opacity-70;
+  }
+  .eyebrow-light { @apply text-gold-300; }
+
+  .accent-serif { @apply font-serif font-normal italic tracking-normal; }
+
+  .section { @apply py-20 md:py-28; }
+  .section-tight { @apply py-16 md:py-20; }
+
+  .card {
+    @apply rounded-lg border border-stone-200 bg-white shadow-card;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .link-underline:hover, .link-underline:focus-visible { background-size: 100% 1px; }
+
+  .field-label { @apply mb-1.5 block text-sm font-semibold text-ink-800; }
+  .field {
+    @apply block w-full rounded-md border border-stone-300 bg-white px-3.5 py-3 text-[15px] text-ink-900 shadow-sm outline-none transition placeholder:text-stone-400;
+    @apply focus:border-gold-500 focus:ring-2 focus:ring-gold-200;
+  }
+  .field[aria-invalid='true'] { @apply border-red-500 ring-2 ring-red-100; }
+  .field-error { @apply mt-1.5 flex items-center gap-1.5 text-[13px] font-medium text-red-700; }
+
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+    opacity: .06; mix-blend-mode: overlay;
+  }
+
+  /* Horizontal "garage door panel" lines used as a subtle brand texture. */
+  .panel-lines {
+    background-image: repeating-linear-gradient(180deg, transparent 0 46px, rgba(255,255,255,.045) 46px 47px, transparent 47px 48px);
+  }
+  .panel-lines-dark {
+    background-image: repeating-linear-gradient(180deg, transparent 0 46px, rgba(14,15,17,.05) 46px 47px, transparent 47px 48px);
+  }
+
+  .gold-text {
+    background: linear-gradient(100deg, #B08A45 0%, #E6CF9A 45%, #C9A45C 60%, #8E6E35 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+}
