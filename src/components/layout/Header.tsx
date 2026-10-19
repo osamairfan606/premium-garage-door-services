@@ -157,7 +157,7 @@ export default function Header() {
             <Logo className={cn('transition-all duration-500', scrolled ? 'h-10' : 'h-12')} />
 
             <nav aria-label="Primary" className="hidden items-center lg:flex">
-              <NavLink to="/" end className={p => cn(navItem(p), 'hidden xl:block')}>{primaryNav.home.label}</NavLink>
+              <NavLink to="/" end className={navItem}>{primaryNav.home.label}</NavLink>
               <NavLink to={primaryNav.about.to} className={navItem}>{primaryNav.about.label}</NavLink>
               <NavDropdown label="Services" active={pathname.startsWith('/services')} panelClassName="w-[min(760px,92vw)]">
                 <div className="grid grid-cols-[1fr_1.35fr]">
@@ -184,8 +184,7 @@ export default function Header() {
                   </div>
                 </div>
               </NavDropdown>
-              <NavLink to={primaryNav.residential.to} className={cn(navItem({ isActive: pathname === primaryNav.residential.to }), 'hidden xl:block')}>{primaryNav.residential.label}</NavLink>
-              <NavLink to={primaryNav.commercial.to} className={cn(navItem({ isActive: pathname === primaryNav.commercial.to }), 'hidden xl:block')}>{primaryNav.commercial.label}</NavLink>
+              <NavLink to={primaryNav.residential.to} className={navItem({ isActive: pathname === primaryNav.residential.to })}>{primaryNav.residential.label}</NavLink>
               <NavDropdown label="Locations" active={pathname.startsWith('/locations')} panelClassName="w-[min(560px,92vw)]">
                 <div className="grid grid-cols-2 divide-x divide-white/10">
                   {locationsMenu.map(({ location: l, links }) => (
@@ -205,7 +204,6 @@ export default function Header() {
                   ))}
                 </div>
               </NavDropdown>
-              <NavLink to={primaryNav.offers.to} className={navItem}>{primaryNav.offers.label}</NavLink>
               <NavLink to={primaryNav.faqs.to} className={navItem}>{primaryNav.faqs.label}</NavLink>
               <NavLink to={primaryNav.contact.to} className={navItem}>{primaryNav.contact.label}</NavLink>
             </nav>

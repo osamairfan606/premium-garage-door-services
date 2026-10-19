@@ -15,7 +15,6 @@ export interface QuotePayload {
   location: LocationId;
   locationLabel: string;
   locationPhone: string;
-  serviceType: 'residential' | 'commercial' | '';
   service: string;
   address: string;
   preferredDate: string;

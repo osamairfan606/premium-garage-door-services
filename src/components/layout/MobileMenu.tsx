@@ -102,7 +102,6 @@ export default function MobileMenu({ open, onClose, location }: { open: boolean;
                   {serviceLinks.map(s => <Link key={s.to} to={s.to} className={subLinkCls} onClick={onClose}>{s.label}</Link>)}
                 </Group>,
                 <NavLink key="res" to={primaryNav.residential.to} className={linkCls} onClick={onClose}>{primaryNav.residential.label}</NavLink>,
-                <NavLink key="com" to={primaryNav.commercial.to} className={linkCls} onClick={onClose}>{primaryNav.commercial.label}</NavLink>,
                 <Group key="locations" label="Locations">
                   {locationsMenu.map(({ location: l, links }) => (
                     <div key={l.id} className="mb-3">
@@ -111,7 +110,6 @@ export default function MobileMenu({ open, onClose, location }: { open: boolean;
                     </div>
                   ))}
                 </Group>,
-                <NavLink key="offers" to={primaryNav.offers.to} className={linkCls} onClick={onClose}>{primaryNav.offers.label}</NavLink>,
                 <NavLink key="faqs" to={primaryNav.faqs.to} className={linkCls} onClick={onClose}>{primaryNav.faqs.label}</NavLink>,
                 <NavLink key="contact" to={primaryNav.contact.to} className={linkCls} onClick={onClose}>{primaryNav.contact.label}</NavLink>,
               ].map((el, i) => (

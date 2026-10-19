@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AlertTriangle, ArrowRight, CalendarCheck, Check, Tag } from 'lucide-react';
+import { AlertTriangle, ArrowRight, CalendarCheck, Check } from 'lucide-react';
 import Seo from '../components/Seo';
 import PageHero from '../components/sections/PageHero';
 import Button from '../components/ui/Button';
@@ -9,11 +9,10 @@ import { Reveal, Stagger, StaggerItem, slideIn } from '../components/ui/Reveal';
 import CallChooser from '../components/layout/CallChooser';
 import LocationSwitcher from '../components/sections/LocationSwitcher';
 import { ServiceCard } from '../components/sections/ServicesGrid';
-import { FaqSection } from '../components/sections/Faq';
+import { FaqSection, Reviews } from '../components/sections/Faq';
 import QuoteSection from '../components/sections/QuoteSection';
 import FinalCta from '../components/sections/FinalCta';
 import { getService, services } from '../config/services';
-import { getOffer, OFFER_TERMS } from '../config/offers';
 import { locationList } from '../config/locations';
 import { breadcrumbSchema, faqSchema } from '../lib/seo';
 import { site } from '../config/site';
@@ -37,7 +36,6 @@ export default function ServiceDetail({ slug }: { slug: string }) {
   if (!s) return <NotFound />;
   const path = `/services/${s.slug}`;
   const crumbs = [{ label: 'Home', to: '/' }, { label: 'Services', to: '/services' }, { label: s.name, to: path }];
-  const offer = getOffer(s.offerId);
   const related = s.related.map(r => services.find(x => x.slug === r)!).filter(Boolean);
 
   return (
@@ -96,16 +94,6 @@ export default function ServiceDetail({ slug }: { slug: string }) {
                 ))}
               </ul>
             </div>
-            {offer && (
-              <div className="on-dark rounded-lg border border-gold-400/40 bg-ink-900 p-7 text-white">
-                <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-eyebrow text-gold-300"><Tag className="h-3.5 w-3.5" aria-hidden="true" /> Current offer</p>
-                <p className="mt-3 font-display text-4xl font-semibold text-gold-200">{offer.value}</p>
-                <p className="mt-1 font-semibold">{offer.title}</p>
-                <p className="mt-2 text-sm text-white/65">{offer.description}</p>
-                <p className="mt-4 text-[11px] leading-relaxed text-white/45">{OFFER_TERMS}</p>
-                <Link to="/special-offers" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-200 hover:text-white">All offers <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
-              </div>
-            )}
           </Reveal>
         </div>
       </section>
@@ -113,18 +101,16 @@ export default function ServiceDetail({ slug }: { slug: string }) {
       {/* Available in both locations */}
       <section className="section-tight on-dark bg-ink-900">
         <div className="container">
-          <SectionHeading dark eyebrow="Where we offer it" title={<>{s.name} in <span className="accent-serif text-gold-200">Chicago & Indianapolis</span></>} />
+          <SectionHeading dark eyebrow="Where we provide it" title={<>{s.name} in <span className="accent-serif text-gold-200">Chicago & Indianapolis</span></>} />
           <Stagger className="mt-10 grid gap-5 md:grid-cols-2" stagger={0.12}>
             {locationList.map(l => (
               <StaggerItem key={l.id} className="rounded-lg border border-white/10 bg-ink-800 p-7">
                 <h3 className="text-2xl font-semibold text-white">{l.label}</h3>
                 <a href={l.phoneHref} data-location={l.id} className="mt-2 inline-block font-display text-2xl font-semibold text-gold-200 tabular-nums hover:text-white" aria-label={`Call ${l.city}: ${l.phoneDisplay}`}>{l.phoneDisplay}</a>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {s.segments.map(seg => (
-                    <Link key={seg} to={`/locations/${l.id}/${seg}`} className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold capitalize text-white transition hover:border-gold-300">
-                      {l.city} {seg} <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
-                    </Link>
-                  ))}
+                  <Link to={`/locations/${l.id}/residential`} className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold capitalize text-white transition hover:border-gold-300">
+                    {l.city} residential <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                  </Link>
                 </div>
               </StaggerItem>
             ))}
@@ -132,6 +118,7 @@ export default function ServiceDetail({ slug }: { slug: string }) {
         </div>
       </section>
 
+      <Reviews />
       <FaqSection faqs={s.faqs} eyebrow={`${s.short} FAQs`} title={<>{s.name} <span className="accent-serif text-gold-500">questions</span></>} lead="Quick answers about this service. Can’t find yours? Call your local team any time." />
 
       <section className="section bg-stone-50">

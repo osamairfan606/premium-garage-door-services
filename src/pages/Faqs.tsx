@@ -6,7 +6,7 @@ import Accordion from '../components/ui/Accordion';
 import { Reveal } from '../components/ui/Reveal';
 import LocationSwitcher from '../components/sections/LocationSwitcher';
 import FinalCta from '../components/sections/FinalCta';
-import { commercialCopy, generalFaqs, residentialCopy } from '../config/content';
+import { generalFaqs, residentialCopy } from '../config/content';
 import { locations } from '../config/locations';
 import { breadcrumbSchema, faqSchema } from '../lib/seo';
 import { cn } from '../lib/cn';
@@ -15,7 +15,6 @@ import type { FaqItem } from '../config/locations';
 const groups: { id: string; label: string; faqs: FaqItem[]; link?: { to: string; label: string } }[] = [
   { id: 'general', label: 'General', faqs: generalFaqs },
   { id: 'residential', label: 'Residential', faqs: residentialCopy.faqs, link: { to: '/services/residential', label: 'Residential services' } },
-  { id: 'commercial', label: 'Commercial', faqs: commercialCopy.faqs, link: { to: '/services/commercial', label: 'Commercial services' } },
   { id: 'chicago', label: 'Chicago', faqs: locations.chicago.faqs, link: { to: '/locations/chicago', label: 'Chicago service area' } },
   { id: 'indianapolis', label: 'Indianapolis', faqs: locations.indianapolis.faqs, link: { to: '/locations/indianapolis', label: 'Indianapolis service area' } },
 ];

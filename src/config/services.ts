@@ -1,10 +1,9 @@
 import type { ImageName } from './images.generated';
 import type { FaqItem } from './locations';
 
-export type Segment = 'residential' | 'commercial';
 export type IconName =
   | 'wrench' | 'spring' | 'opener' | 'door' | 'track' | 'cable' | 'roller' | 'panel' | 'tune'
-  | 'shield' | 'clock' | 'badge' | 'thumbs' | 'calendar' | 'search' | 'clipboard' | 'check' | 'building' | 'home' | 'phone' | 'tag';
+  | 'shield' | 'clock' | 'badge' | 'thumbs' | 'calendar' | 'search' | 'clipboard' | 'check' | 'home' | 'phone' | 'tag';
 
 export interface Service {
   slug: string;
@@ -22,10 +21,8 @@ export interface Service {
   /** Service elements listed on the original website. */
   includes: string[];
   signs: string[];
-  segments: Segment[];
   faqs: FaqItem[];
   related: string[];
-  offerId?: string;
 }
 
 export const services: Service[] = [
@@ -45,13 +42,11 @@ export const services: Service[] = [
     ],
     includes: ['Door won’t open or close', 'Sensor misalignment', 'Remote or keypad issues', 'Hardware and hinge repair', 'Door balancing', 'Safety inspection'],
     signs: ['The door reverses before it reaches the floor', 'It opens partway and stops', 'Grinding, scraping or banging noises', 'The door looks uneven or crooked', 'The opener runs but the door doesn’t move'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'How long does a typical garage door repair take?', a: 'Most garage door repairs can be completed within a few hours, depending on the issue and parts required.' },
       { q: 'Can you repair all garage door brands?', a: 'Our technicians work with most major garage door brands, openers and garage door systems.' },
     ],
     related: ['broken-spring-repair', 'off-track-repair', 'garage-door-opener-repair-installation'],
-    offerId: 'repairs-20',
   },
   {
     slug: 'broken-spring-repair',
@@ -69,13 +64,11 @@ export const services: Service[] = [
     ],
     includes: ['Spring replacement', 'Torsion & extension springs', 'Spring adjustment', 'System conversion'],
     signs: ['A loud snap or bang from the garage', 'The door is suddenly very heavy', 'It lifts unevenly or only a few inches', 'A visible gap in the spring above the door', 'The door won’t open completely'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'How do I know if my garage door spring needs replacement?', a: 'Common signs include loud snapping sounds, difficulty opening the door, uneven movement, heavy lifting, or a garage door that won’t open completely.' },
       { q: 'Is it safe to replace a spring myself?', a: 'We strongly advise against it. Springs are under high tension and can cause serious injury. Leave the door closed and call a professional.' },
     ],
     related: ['cable-repair', 'maintenance-tune-up', 'garage-door-repair'],
-    offerId: 'spring-15',
   },
   {
     slug: 'garage-door-opener-repair-installation',
@@ -93,13 +86,11 @@ export const services: Service[] = [
     ],
     includes: ['Motor replacement', 'Remote programming', 'Keypad setup', 'Sensor alignment'],
     signs: ['Remote or keypad stopped working', 'The opener hums but doesn’t lift', 'The door reverses unexpectedly', 'Blinking sensor lights', 'Loud or rough operation'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'Can you program a new remote or keypad?', a: 'Yes — remote programming and keypad setup are part of our opener service.' },
       { q: 'Why does my door reverse before closing?', a: 'This is very often a safety sensor alignment issue. We realign and test sensors as part of every opener service call.' },
     ],
     related: ['garage-door-repair', 'maintenance-tune-up', 'garage-door-installation'],
-    offerId: 'opener-15',
   },
   {
     slug: 'garage-door-installation',
@@ -117,13 +108,11 @@ export const services: Service[] = [
     ],
     includes: ['Free onsite estimate on new doors', 'Old door removal', 'Professional installation', 'Opener pairing and setup', 'Balance and safety testing', 'Full system upgrades'],
     signs: ['Repeated repairs on an ageing door', 'Multiple damaged or dented panels', 'The door is drafty or poorly sealed', 'You want to upgrade the look of your property'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'Should I repair or replace my garage door?', a: 'We inspect your system and recommend the most cost-effective solution based on age, condition, safety, and repair costs.' },
       { q: 'Do you offer free estimates on new doors?', a: 'Yes — we offer a free onsite estimate for new garage doors.' },
     ],
     related: ['garage-door-opener-repair-installation', 'panel-repair', 'maintenance-tune-up'],
-    offerId: 'new-door-estimate',
   },
   {
     slug: 'off-track-repair',
@@ -141,12 +130,10 @@ export const services: Service[] = [
     ],
     includes: ['Track realignment', 'Hinge & bracket fix', 'Door balancing', 'Roller reinsertion'],
     signs: ['The door is hanging crooked', 'Rollers have popped out of the track', 'Visible gaps between rollers and track', 'Bent or dented track sections'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'Can I keep using a door that’s off track?', a: 'No. Stop using it, keep people and vehicles away, and call us. Continuing to operate it can cause the door to fall or cause further damage.' },
     ],
     related: ['roller-repair', 'cable-repair', 'garage-door-repair'],
-    offerId: 'repairs-20',
   },
   {
     slug: 'cable-repair',
@@ -164,12 +151,10 @@ export const services: Service[] = [
     ],
     includes: ['Cable replacement', 'Cable adjustment', 'Drum check', 'Safety inspection'],
     signs: ['Frayed or rusty cables', 'A cable hanging loose', 'The door closes unevenly', 'One side lifts before the other'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'Why did my garage door cable break?', a: 'Cables wear over time and are affected by rust, misaligned drums and spring problems. We inspect the related parts so the new cable lasts.' },
     ],
     related: ['broken-spring-repair', 'off-track-repair', 'roller-repair'],
-    offerId: 'cable-10',
   },
   {
     slug: 'roller-repair',
@@ -187,12 +172,10 @@ export const services: Service[] = [
     ],
     includes: ['Roller replacement', 'Track lubrication', 'Noise reduction', 'Smooth operation'],
     signs: ['Grinding or squeaking as the door moves', 'Jerky, shaky movement', 'Cracked or wobbling rollers', 'The opener strains to lift the door'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'How do I know my rollers need replacing?', a: 'Noise, shaking and visibly worn or cracked rollers are the usual signs. We can confirm during a free onsite estimate.' },
     ],
     related: ['off-track-repair', 'maintenance-tune-up', 'garage-door-repair'],
-    offerId: 'repairs-20',
   },
   {
     slug: 'panel-repair',
@@ -210,12 +193,10 @@ export const services: Service[] = [
     ],
     includes: ['Damage assessment', 'Panel and section repair', 'Hardware and hinge check', 'Balance and safety testing'],
     signs: ['Dents, cracks or bent sections', 'Panels rubbing or catching', 'Gaps letting in light or drafts', 'Damage after a vehicle impact'],
-    segments: ['residential', 'commercial'],
     faqs: [
       { q: 'Is it better to replace a panel or the whole door?', a: 'It depends on the door’s age, condition and the extent of the damage. We’ll recommend the most cost-effective option after inspecting it.' },
     ],
     related: ['garage-door-installation', 'garage-door-repair', 'off-track-repair'],
-    offerId: 'repairs-20',
   },
   {
     slug: 'maintenance-tune-up',
@@ -233,12 +214,10 @@ export const services: Service[] = [
     ],
     includes: ['Lubrication service', 'Hardware tightening', 'Balance testing', 'Safety inspection'],
     signs: ['The door is getting noisier', 'It’s been more than a year since a service', 'The door feels heavier than it used to', 'You want to prevent winter breakdowns'],
-    segments: ['residential', 'commercial'],
     faqs: [
-      { q: 'How often should a garage door be serviced?', a: 'Most residential doors benefit from a tune-up about once a year. Doors that cycle frequently — like many commercial doors — benefit from more frequent checks.' },
+      { q: 'How often should a garage door be serviced?', a: 'Most residential doors benefit from a tune-up about once a year. Doors that are used many times a day benefit from more frequent checks.' },
     ],
     related: ['roller-repair', 'broken-spring-repair', 'garage-door-opener-repair-installation'],
-    offerId: 'tune-up-49',
   },
 ];
 

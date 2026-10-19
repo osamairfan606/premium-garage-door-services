@@ -20,7 +20,7 @@ export default function Footer() {
           <div className="lg:col-span-4">
             <Logo className="h-16" />
             <p className="mt-6 max-w-sm leading-relaxed">
-              Garage door repair, installation and maintenance for homes and businesses in Chicago and Indianapolis. Free onsite estimates, honest pricing and a 100% satisfaction guarantee.
+              Garage door repair, installation and maintenance for homeowners in Chicago and Indianapolis. Free onsite estimates, honest pricing and a 100% satisfaction guarantee.
             </p>
             <p className="mt-5 flex items-center gap-2 text-sm text-white/60">
               <Clock3 className="h-4 w-4 text-gold-300" aria-hidden="true" /> {site.hours} · 24/7 emergency service
@@ -49,8 +49,7 @@ export default function Footer() {
             <h2 className="font-sans text-xs font-semibold uppercase tracking-eyebrow text-white">Services</h2>
             <ul className="mt-5 grid grid-cols-1 gap-3 text-[15px] sm:grid-cols-2 lg:grid-cols-1">
               <li><Link to="/services/residential" className="link-underline transition hover:text-white">Residential Services</Link></li>
-              <li><Link to="/services/commercial" className="link-underline transition hover:text-white">Commercial Services</Link></li>
-              {serviceLinks.slice(0, 7).map(l => (
+              {serviceLinks.slice(0, 8).map(l => (
                 <li key={l.to}><Link to={l.to} className="link-underline transition hover:text-white">{l.label}</Link></li>
               ))}
             </ul>
@@ -68,7 +67,6 @@ export default function Footer() {
                 <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
                   <li><Link to={`/locations/${l.id}`} className="inline-flex items-center gap-1 hover:text-white">Service area <ArrowUpRight className="h-3 w-3" aria-hidden="true" /></Link></li>
                   <li><Link to={`/locations/${l.id}/residential`} className="hover:text-white">Residential</Link></li>
-                  <li><Link to={`/locations/${l.id}/commercial`} className="hover:text-white">Commercial</Link></li>
                 </ul>
               </div>
             ))}

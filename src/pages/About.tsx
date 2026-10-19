@@ -9,6 +9,7 @@ import CallChooser from '../components/layout/CallChooser';
 import { StatsBand, WhyChooseUs, Process } from '../components/sections/Highlights';
 import LocationCards from '../components/sections/LocationCards';
 import FinalCta from '../components/sections/FinalCta';
+import { Reviews } from '../components/sections/Faq';
 import { breadcrumbSchema } from '../lib/seo';
 
 const commitments = [
@@ -45,7 +46,7 @@ export default function About() {
               <p>
                 From broken springs and damaged panels to garage door openers and new installations, we provide practical solutions for a wide range of garage door needs. Garage door problems can’t wait, so we offer same-day service whenever possible and a 24/7 line for emergencies.
               </p>
-              <p>Today we serve homeowners and businesses in Chicago, Illinois and Indianapolis, Indiana — each with its own local phone line.</p>
+              <p>Today we serve homeowners in Chicago, Illinois and Indianapolis, Indiana — each with its own local phone line.</p>
             </Reveal>
           </div>
           <Reveal variants={slideIn('right')} className="relative">
@@ -78,6 +79,7 @@ export default function About() {
       </section>
 
       <WhyChooseUs />
+      <Reviews />
       <Process />
       <LocationCards />
       <FinalCta />

@@ -9,7 +9,7 @@ import { cn } from '../../lib/cn';
  * Tabbed Chicago / Indianapolis selector for general pages. Each tab shows only
  * that city's phone number and links to its location-specific pages.
  */
-export default function LocationSwitcher({ segment, dark = true }: { segment?: 'residential' | 'commercial'; dark?: boolean }) {
+export default function LocationSwitcher({ segment, dark = true }: { segment?: 'residential'; dark?: boolean }) {
   const [active, setActive] = useState<LocationId>('chicago');
   const loc = locationList.find(l => l.id === active)!;
   const uid = useId();

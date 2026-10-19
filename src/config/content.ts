@@ -70,40 +70,19 @@ export const residentialCopy = {
   ] as FaqItem[],
 };
 
-export const commercialCopy = {
-  applications: [
-    { title: 'Retail & storefronts', body: 'Secure, reliable doors that open on time for staff and deliveries.' },
-    { title: 'Warehouses & loading areas', body: 'Doors that cycle frequently need planned maintenance to avoid downtime.' },
-    { title: 'Workshops & service bays', body: 'Keep vehicles and equipment moving in and out without interruption.' },
-    { title: 'Property & facility management', body: 'One contact for repairs, maintenance and replacement across your sites.' },
-  ],
-  considerations: [
-    { icon: 'shield' as IconName, title: 'Safety', body: 'Balance testing, hardware checks and sensor alignment protect staff and visitors.' },
-    { icon: 'clock' as IconName, title: 'Uptime', body: 'Planned maintenance catches worn springs, rollers and cables before they fail.' },
-    { icon: 'building' as IconName, title: 'Security', body: 'A door that closes and locks properly protects stock, tools and premises.' },
-    { icon: 'clipboard' as IconName, title: 'Clear estimates', body: 'Free onsite estimates with recommendations explained before work starts.' },
-  ],
-  faqs: [
-    { q: 'What commercial door services do you offer?', a: 'We repair springs, cables, rollers, tracks and openers, and provide maintenance, installation and replacement. Commercial door systems vary, so please call your local line with your door details and we will confirm we can help.' },
-    { q: 'Can you work around our business hours?', a: 'Tell us your preferred time when requesting service — we’ll do our best to schedule visits that minimise disruption.' },
-    { q: 'Do you offer free estimates for commercial properties?', a: 'Yes. We provide free onsite estimates for commercial repairs, installations and replacements.' },
-    { q: 'Do you offer maintenance for multiple doors?', a: 'Yes — maintenance covers lubrication, hardware tightening, balance testing and safety inspection. Let us know how many doors you have when you request service.' },
-  ] as FaqItem[],
-};
-
 /**
  * Gallery imagery. `source: 'stock'` images are licensed stock photography
  * (Pexels License) used for illustration — replace with real project photos
  * by adding them to assets-src/company and updating this list.
  */
 export const gallery: { image: ImageName; alt: string; caption: string; tall?: boolean }[] = [
-  { image: 'hero-home', alt: 'Brick home with a white raised-panel double garage door lit at dusk', caption: 'Residential' },
-  { image: 'com-numbered-doors', alt: 'Three numbered commercial overhead doors on a grey building', caption: 'Commercial', tall: true },
-  { image: 'res-house-dusk', alt: 'Two-car garage on a craftsman-style home at sunset', caption: 'Residential' },
-  { image: 'com-loading-dock', alt: 'Loading dock bays with overhead doors', caption: 'Commercial' },
-  { image: 'res-modern-dusk', alt: 'Contemporary home with an integrated garage lit at dusk', caption: 'Residential', tall: true },
-  { image: 'com-brick-warehouse', alt: 'Brick building with a metal overhead door', caption: 'Commercial' },
-  { image: 'res-house-two-storey', alt: 'Two-storey home with a white double garage door', caption: 'Residential' },
+  { image: 'hero-home', alt: 'Brick home with a white raised-panel double garage door lit at dusk', caption: 'Raised panel' },
+  { image: 'res-modern-dusk', alt: 'Contemporary home with an integrated garage lit at dusk', caption: 'Modern', tall: true },
+  { image: 'res-house-dusk', alt: 'Two-car garage on a craftsman-style home at sunset', caption: 'Two-car garage' },
+  { image: 'res-house-suburban', alt: 'Suburban home with a single garage door', caption: 'Single-car garage' },
+  { image: 'res-brick-driveway', alt: 'Brick home with a wide driveway leading to the garage', caption: 'Detached garage', tall: true },
+  { image: 'res-house-two-storey', alt: 'Two-storey home with a white double garage door', caption: 'Double door' },
+  { image: 'res-modern-garage', alt: 'Modern home with dark sectional garage doors', caption: 'Contemporary' },
 ];
 
 /** Brands shown on the original website. Our team works with most major brands. */

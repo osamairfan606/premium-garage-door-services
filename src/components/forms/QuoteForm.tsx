@@ -15,7 +15,6 @@ interface FormState {
   phone: string;
   email: string;
   location: LocationId | '';
-  serviceType: 'residential' | 'commercial' | '';
   service: string;
   address: string;
   preferredDate: string;
@@ -45,7 +44,6 @@ function validate(s: FormState): Errors {
   else if (!(digits.length === 10 || (digits.length === 11 && digits.startsWith('1'))) || /^[01]/.test(digits.length === 11 ? digits.slice(1) : digits))
     e.phone = 'Please enter a valid 10-digit US phone number.';
   if (s.email.trim() && !EMAIL_RE.test(s.email.trim())) e.email = 'Please enter a valid email address.';
-  if (!s.serviceType) e.serviceType = 'Please choose residential or commercial.';
   if (!s.service) e.service = 'Please choose the service you need.';
   if (s.address.trim().length < 5) e.address = 'Please enter your service address or ZIP code.';
   if (s.preferredDate) {
@@ -79,14 +77,13 @@ function Field({ id, label, required, error, hint, children }: { id: string; lab
 
 interface QuoteFormProps {
   defaultLocation?: LocationId;
-  defaultServiceType?: 'residential' | 'commercial';
   defaultService?: string;
   /** Lock the location choice (used on location-specific pages). */
   lockLocation?: boolean;
   title?: string;
 }
 
-export default function QuoteForm({ defaultLocation, defaultServiceType, defaultService, lockLocation, title = 'Request a free estimate' }: QuoteFormProps) {
+export default function QuoteForm({ defaultLocation, defaultService, lockLocation, title = 'Request a free estimate' }: QuoteFormProps) {
   const uid = useId();
   const fid = (n: string) => `${uid}-${n}`;
   const [params] = useSearchParams();
@@ -100,20 +97,17 @@ export default function QuoteForm({ defaultLocation, defaultServiceType, default
   const [state, setState] = useState<FormState>({
     fullName: '', phone: '', email: '',
     location: defaultLocation ?? '',
-    serviceType: defaultServiceType ?? '',
     service: defaultService ?? '',
     address: '', preferredDate: '', timeSlot: '', description: '', consent: false,
   });
 
-  // Query-string preselection (?location=chicago&type=commercial&service=Broken%20Spring), applied after hydration.
+  // Query-string preselection (?location=chicago&service=Broken%20Spring), applied after hydration.
   useEffect(() => {
     const q = getLocation(params.get('location') ?? undefined);
-    const type = params.get('type');
     const svc = params.get('service');
     setState(s => ({
       ...s,
       location: lockLocation ? s.location : q?.id ?? s.location,
-      serviceType: type === 'residential' || type === 'commercial' ? type : s.serviceType,
       service: svc && issueTypes.includes(svc) ? svc : s.service,
     }));
     setMinDate(new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10));
@@ -233,19 +227,6 @@ export default function QuoteForm({ defaultLocation, defaultServiceType, default
         <Field id={fid('email')} label="Email" error={errors.email}>
           <input id={fid('email')} data-field="email" type="email" inputMode="email" className="field" autoComplete="email" value={state.email} onChange={e => set('email', e.target.value)} aria-invalid={!!errors.email} aria-describedby={describedBy('email')} />
         </Field>
-
-        <fieldset>
-          <legend className="field-label">Property type <span className="text-gold-600" aria-hidden="true">*</span></legend>
-          <div className="grid grid-cols-2 gap-2">
-            {(['residential', 'commercial'] as const).map((t, i) => (
-              <label key={t} className={radioCard(state.serviceType === t, !!errors.serviceType)}>
-                <input type="radio" name={fid('serviceType')} value={t} checked={state.serviceType === t} onChange={() => set('serviceType', t)} className="h-4 w-4 accent-[#B08A45]" data-field={i === 0 ? 'serviceType' : undefined} aria-describedby={describedBy('serviceType')} />
-                <span className="font-semibold capitalize text-ink-900">{t}</span>
-              </label>
-            ))}
-          </div>
-          {errors.serviceType && <p id={`${fid('serviceType')}-error`} className="field-error"><AlertCircle className="h-3.5 w-3.5" aria-hidden="true" /> {errors.serviceType}</p>}
-        </fieldset>
 
         <div className="grid gap-5 sm:grid-cols-2">
           <Field id={fid('service')} label="Service needed" required error={errors.service}>

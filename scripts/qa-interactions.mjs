@@ -69,7 +69,7 @@ const errors = [];
   await page.getByRole('button', { name: /Submit Request/ }).click();
   await page.waitForTimeout(400);
   const errCount = await page.locator('.field-error').count();
-  check('Empty submit shows validation errors', errCount >= 6, `${errCount} errors`);
+  check('Empty submit shows validation errors', errCount >= 5, `${errCount} errors`);
   const focused = await page.evaluate(() => document.activeElement?.getAttribute('data-field'));
   check('First invalid field receives focus', focused === 'location', `focused=${focused}`);
 
@@ -87,7 +87,6 @@ const errors = [];
   await page.locator('input[data-field="phone"]').fill('3175550123');
   check('Phone input auto-formats', (await page.locator('input[data-field="phone"]').inputValue()) === '(317) 555-0123');
   await page.locator('input[data-field="email"]').fill('test@example.com');
-  await page.locator('input[type="radio"][value="residential"]').check();
   await page.locator('select[data-field="service"]').selectOption('Broken Spring');
   await page.locator('input[data-field="address"]').fill('46204');
   await page.locator('input[data-field="consent"]').check();
@@ -101,15 +100,15 @@ const errors = [];
   check('No fake success message', !(await page.getByText('Request received').isVisible()));
 
   // Location preselect via query string
-  await page.goto(BASE + '/contact?location=chicago&type=commercial', { waitUntil: 'networkidle' });
+  await page.goto(BASE + '/contact?location=chicago&service=Broken%20Spring', { waitUntil: 'networkidle' });
   await page.waitForTimeout(400);
   check('Query string preselects location', await page.locator('input[type="radio"][value="chicago"]').isChecked());
-  check('Query string preselects property type', await page.locator('input[type="radio"][value="commercial"]').isChecked());
+  check('Query string preselects service', (await page.locator('select[data-field="service"]').inputValue()) === 'Broken Spring');
 
   // Location page form is locked to that city
-  await page.goto(BASE + '/locations/indianapolis/commercial', { waitUntil: 'networkidle' });
+  await page.goto(BASE + '/locations/indianapolis/residential', { waitUntil: 'networkidle' });
   const radios = await page.locator('#quote input[type="radio"][value]').evaluateAll(r => r.map(x => `${x.value}:${x.checked}`));
-  check('Location page form preselects & locks city', radios.includes('indianapolis:true') && !radios.some(r => r.startsWith('chicago')), radios.join(','));
+  check('Location page form preselects & locks city', radios.includes('indianapolis:true') && !radios.some(r => r.startsWith('chicago')) && !radios.some(r => r.startsWith('commercial')), radios.join(','));
 
   // 404
   const res = await page.goto(BASE + '/does-not-exist', { waitUntil: 'networkidle' });

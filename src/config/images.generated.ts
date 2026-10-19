@@ -11,66 +11,6 @@ export const imageManifest = {
     ],
     "source": "company"
   },
-  "offer-1": {
-    "width": 1080,
-    "height": 990,
-    "widths": [
-      480,
-      800,
-      1080
-    ],
-    "source": "company"
-  },
-  "offer-2": {
-    "width": 1080,
-    "height": 992,
-    "widths": [
-      480,
-      800,
-      1080
-    ],
-    "source": "company"
-  },
-  "offer-3": {
-    "width": 1080,
-    "height": 990,
-    "widths": [
-      480,
-      800,
-      1080
-    ],
-    "source": "company"
-  },
-  "offer-4": {
-    "width": 1080,
-    "height": 990,
-    "widths": [
-      480,
-      800,
-      1080
-    ],
-    "source": "company"
-  },
-  "offer-5": {
-    "width": 1080,
-    "height": 992,
-    "widths": [
-      480,
-      800,
-      1080
-    ],
-    "source": "company"
-  },
-  "offer-6": {
-    "width": 1080,
-    "height": 990,
-    "widths": [
-      480,
-      800,
-      1080
-    ],
-    "source": "company"
-  },
   "team-van": {
     "width": 1402,
     "height": 1122,
@@ -107,72 +47,6 @@ export const imageManifest = {
   "chicago-river": {
     "width": 1800,
     "height": 1011,
-    "widths": [
-      480,
-      800,
-      1280,
-      1800
-    ],
-    "source": "stock"
-  },
-  "com-brick-warehouse": {
-    "width": 1800,
-    "height": 2700,
-    "widths": [
-      480,
-      800,
-      1280,
-      1800
-    ],
-    "source": "stock"
-  },
-  "com-dock-forklift": {
-    "width": 1800,
-    "height": 2700,
-    "widths": [
-      480,
-      800,
-      1280,
-      1800
-    ],
-    "source": "stock"
-  },
-  "com-loading-dock": {
-    "width": 1800,
-    "height": 1200,
-    "widths": [
-      480,
-      800,
-      1280,
-      1800
-    ],
-    "source": "stock"
-  },
-  "com-numbered-doors": {
-    "width": 1800,
-    "height": 1200,
-    "widths": [
-      480,
-      800,
-      1280,
-      1800
-    ],
-    "source": "stock"
-  },
-  "com-warehouse-doors": {
-    "width": 1800,
-    "height": 1285,
-    "widths": [
-      480,
-      800,
-      1280,
-      1800
-    ],
-    "source": "stock"
-  },
-  "com-warehouse-interior": {
-    "width": 1800,
-    "height": 1200,
     "widths": [
       480,
       800,

@@ -6,14 +6,13 @@ import { locationList, type Location } from '../../config/locations';
 
 interface Props {
   location?: Location;
-  serviceType?: 'residential' | 'commercial';
   service?: string;
   title?: React.ReactNode;
   lead?: string;
   id?: string;
 }
 
-export default function QuoteSection({ location, serviceType, service, title, lead, id = 'quote' }: Props) {
+export default function QuoteSection({ location, service, title, lead, id = 'quote' }: Props) {
   const contacts = location ? [location] : locationList;
   return (
     <section id={id} className="section relative overflow-hidden bg-stone-100">
@@ -52,7 +51,7 @@ export default function QuoteSection({ location, serviceType, service, title, le
           </Reveal>
         </div>
         <Reveal variants={slideIn('right')}>
-          <QuoteForm defaultLocation={location?.id} lockLocation={!!location} defaultServiceType={serviceType} defaultService={service} />
+          <QuoteForm defaultLocation={location?.id} lockLocation={!!location} defaultService={service} />
         </Reveal>
       </div>
     </section>

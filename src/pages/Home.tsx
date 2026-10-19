@@ -10,10 +10,8 @@ import { Reveal } from '../components/ui/Reveal';
 import CallChooser from '../components/layout/CallChooser';
 import { TrustStrip, StatsBand, WhyChooseUs, Process, BrandStrip } from '../components/sections/Highlights';
 import ServicesGrid from '../components/sections/ServicesGrid';
-import SegmentSplit from '../components/sections/SegmentSplit';
 import LocationCards from '../components/sections/LocationCards';
 import Gallery from '../components/sections/Gallery';
-import OffersSection from '../components/sections/Offers';
 import { FaqSection, Reviews } from '../components/sections/Faq';
 import FinalCta from '../components/sections/FinalCta';
 import { locationList } from '../config/locations';
@@ -47,7 +45,7 @@ function HomeHero() {
             <m.span variants={item} className="accent-serif block text-gold-200">you can trust.</m.span>
           </h1>
           <m.p variants={item} className="mt-7 max-w-xl text-lg leading-relaxed text-white/75 md:text-xl">
-            Broken spring, stuck door or faulty opener? Premium Garage Door provides same-day repair, experienced technicians, honest pricing and 24/7 emergency service for homes and businesses.
+            Broken spring, stuck door or faulty opener? Premium Garage Door provides same-day repair, experienced technicians, honest pricing and 24/7 emergency service for homeowners.
           </m.p>
           <m.div variants={item} className="mt-10 flex flex-wrap items-center gap-3">
             <Button to="/contact" size="lg">
@@ -75,7 +73,7 @@ function HomeHero() {
                 <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold-400/15 text-gold-300"><MapPin className="h-4 w-4" aria-hidden="true" /></span>
                 <span className="min-w-0">
                   <span className="flex items-center gap-1.5 font-semibold">{l.label} <ArrowRight className="h-3.5 w-3.5 opacity-0 transition group-hover:translate-x-0.5 group-hover:opacity-100" aria-hidden="true" /></span>
-                  <span className="block text-[13px] text-white/55">Residential & commercial</span>
+                  <span className="block text-[13px] text-white/55">Residential garage doors</span>
                 </span>
               </Link>
               <a href={l.phoneHref} data-location={l.id} className="inline-flex shrink-0 items-center gap-1.5 rounded-md bg-gold-400 px-3 py-2 text-sm font-semibold text-ink-900 tabular-nums transition hover:bg-gold-300" aria-label={`Call ${l.city}: ${l.phoneDisplay}`}>
@@ -100,7 +98,7 @@ export default function Home() {
     <>
       <Seo
         title="Premium Garage Door | Garage Door Repair & Installation in Chicago & Indianapolis"
-        description="Same-day garage door repair, spring replacement, opener service and new door installation in Chicago, IL and Indianapolis, IN. 24/7 emergency service and free onsite estimates."
+        description="Same-day residential garage door repair, spring replacement, opener service and new door installation in Chicago, IL and Indianapolis, IN. 24/7 emergency service and free onsite estimates."
         path="/"
         jsonLd={[faqSchema(generalFaqs.slice(0, 6))]}
       />
@@ -111,7 +109,7 @@ export default function Home() {
         <div className="container grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <SectionHeading
             eyebrow="Local garage door experts"
-            title={<>Fast, reliable garage door service <span className="accent-serif text-gold-500">for homes & businesses</span></>}
+            title={<>Fast, reliable garage door service <span className="accent-serif text-gold-500">for your home</span></>}
             lead="From broken springs and damaged panels to faulty openers and complete door replacements, we provide fast and reliable service — and we don’t leave until your door works perfectly."
           />
           <Reveal>
@@ -122,13 +120,11 @@ export default function Home() {
 
       <ServicesGrid id="services" />
       <BrandStrip />
-      <SegmentSplit />
       <LocationCards />
       <WhyChooseUs />
-      <Gallery />
-      <OffersSection />
-      <Process />
       <Reviews />
+      <Gallery />
+      <Process />
       <FaqSection faqs={generalFaqs.slice(0, 6)} />
       <FinalCta />
     </>

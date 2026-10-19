@@ -12,8 +12,8 @@ export default function Gallery() {
       <div className="container">
         <SectionHeading
           eyebrow="Garage doors we service"
-          title={<>Residential & commercial <span className="accent-serif text-gold-500">door systems</span></>}
-          lead="From raised-panel doors on family homes to overhead doors on warehouses and service bays — our team repairs, maintains and installs a wide range of garage door systems."
+          title={<>Garage doors for <span className="accent-serif text-gold-500">every home</span></>}
+          lead="From classic raised-panel doors to modern contemporary designs — our team repairs, maintains and installs a wide range of residential garage door systems."
         />
         <Stagger className="mt-14 grid auto-rows-[220px] grid-cols-2 gap-3 md:auto-rows-[260px] md:grid-cols-3 md:gap-4" stagger={0.06}>
           {gallery.map((g, i) => (

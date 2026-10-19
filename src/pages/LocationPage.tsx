@@ -5,10 +5,8 @@ import PageHero from '../components/sections/PageHero';
 import Button from '../components/ui/Button';
 import SectionHeading from '../components/ui/SectionHeading';
 import { Reveal, slideIn } from '../components/ui/Reveal';
-import SegmentSplit from '../components/sections/SegmentSplit';
 import ServicesGrid from '../components/sections/ServicesGrid';
 import { WhyChooseUs, Process } from '../components/sections/Highlights';
-import OffersSection from '../components/sections/Offers';
 import { FaqSection, Reviews } from '../components/sections/Faq';
 import QuoteSection from '../components/sections/QuoteSection';
 import FinalCta from '../components/sections/FinalCta';
@@ -26,14 +24,14 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
     <>
       <Seo
         title={`Garage Door Repair ${loc.city}, ${loc.stateCode} | 24/7 Service — ${loc.phoneDisplay}`}
-        description={`Garage door repair, spring replacement, opener service and installation for homes and businesses in ${loc.label}. Same-day service whenever possible. Call ${loc.phoneDisplay}.`}
+        description={`Garage door repair, spring replacement, opener service and installation for homeowners in ${loc.label}. Same-day service whenever possible. Call ${loc.phoneDisplay}.`}
         path={path}
         jsonLd={[breadcrumbSchema(crumbs), locationSchema(loc), faqSchema(loc.faqs)]}
       />
       <PageHero
         size="lg"
         crumbs={crumbs}
-        eyebrow={`${loc.label} · Residential & commercial`}
+        eyebrow={`${loc.label} · Residential garage doors`}
         title={`Garage door repair in ${loc.city}`}
         accent="done right, day or night."
         lead={`${loc.tagline} Free onsite estimates, honest pricing and 24/7 emergency service for broken springs, stuck doors and opener failures.`}
@@ -46,12 +44,9 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
               {loc.phoneDisplay}
             </a>
             <p className="mt-3 flex items-center gap-2 text-sm text-white/60"><Clock3 className="h-4 w-4 text-gold-300" aria-hidden="true" /> Open 24/7 · Same-day service whenever possible</p>
-            <div className="mt-6 grid gap-2 sm:grid-cols-2">
+            <div className="mt-6">
               <Link to={`${path}/residential`} className="flex items-center justify-between rounded-md border border-white/15 px-4 py-3 text-sm font-semibold text-white transition hover:border-gold-300">
-                Residential <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
-              </Link>
-              <Link to={`${path}/commercial`} className="flex items-center justify-between rounded-md border border-white/15 px-4 py-3 text-sm font-semibold text-white transition hover:border-gold-300">
-                Commercial <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                Residential services <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -108,13 +103,11 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
         </div>
       </section>
 
-      <SegmentSplit location={loc} />
-      <ServicesGrid dark eyebrow={`Services in ${loc.city}`} title={<>Garage door services in <span className="accent-serif text-gold-200">{loc.city}</span></>} lead={`Every service below is available to homeowners and businesses in ${loc.label}. Call ${loc.phoneDisplay} for same-day help whenever possible.`} />
+      <ServicesGrid dark eyebrow={`Services in ${loc.city}`} title={<>Garage door services in <span className="accent-serif text-gold-200">{loc.city}</span></>} lead={`Every service below is available to homeowners in ${loc.label}. Call ${loc.phoneDisplay} for same-day help whenever possible.`} />
       <WhyChooseUs cityLabel={loc.city} />
-      <OffersSection location={loc} />
-      <Process />
       <Reviews locationId={loc.id} />
-      <FaqSection faqs={loc.faqs} location={loc} eyebrow={`${loc.city} FAQs`} title={<>Garage door questions in <span className="accent-serif text-gold-500">{loc.city}</span></>} lead={`Answers for homeowners and businesses in ${loc.label}.`} />
+      <Process />
+      <FaqSection faqs={loc.faqs} location={loc} eyebrow={`${loc.city} FAQs`} title={<>Garage door questions in <span className="accent-serif text-gold-500">{loc.city}</span></>} lead={`Answers for homeowners in ${loc.label}.`} />
       <QuoteSection location={loc} />
 
       <section className="bg-stone-50 py-10">

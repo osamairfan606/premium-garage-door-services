@@ -1,6 +1,6 @@
 import {
   Wrench, Radio, Warehouse, Route, Cable, CircleDot, PanelsTopLeft, Gauge, ShieldCheck, Clock3, Award, ThumbsUp,
-  CalendarDays, ScanSearch, ClipboardCheck, CircleCheck, Building2, House, Phone, Tag, type LucideProps,
+  CalendarDays, ScanSearch, ClipboardCheck, CircleCheck, House, Phone, Tag, type LucideProps,
 } from 'lucide-react';
 import type { ComponentType } from 'react';
 import type { IconName } from '../../config/services';
@@ -19,7 +19,7 @@ function SpringIcon({ size = 24, strokeWidth = 1.75, ...props }: LucideProps) {
 const map: Record<IconName, ComponentType<LucideProps>> = {
   wrench: Wrench, spring: SpringIcon, opener: Radio, door: Warehouse, track: Route, cable: Cable, roller: CircleDot,
   panel: PanelsTopLeft, tune: Gauge, shield: ShieldCheck, clock: Clock3, badge: Award, thumbs: ThumbsUp,
-  calendar: CalendarDays, search: ScanSearch, clipboard: ClipboardCheck, check: CircleCheck, building: Building2,
+  calendar: CalendarDays, search: ScanSearch, clipboard: ClipboardCheck, check: CircleCheck,
   home: House, phone: Phone, tag: Tag,
 };
 

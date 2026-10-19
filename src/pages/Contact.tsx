@@ -34,8 +34,7 @@ export default function Contact() {
                     </a>
                     <p className="mt-3 flex items-center gap-2 text-sm text-white/60"><Clock3 className="h-4 w-4" aria-hidden="true" /> {site.hours} · Emergency service</p>
                     <div className="mt-5 flex gap-4 text-sm font-semibold">
-                      <Link to={`/locations/${l.id}/residential`} className="text-white/80 hover:text-gold-200">Residential →</Link>
-                      <Link to={`/locations/${l.id}/commercial`} className="text-white/80 hover:text-gold-200">Commercial →</Link>
+                      <Link to={`/locations/${l.id}/residential`} className="text-white/80 hover:text-gold-200">Residential services →</Link>
                     </div>
                   </div>
                 </StaggerItem>

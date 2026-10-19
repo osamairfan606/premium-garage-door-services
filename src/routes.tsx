@@ -2,10 +2,9 @@ import type { ReactElement } from 'react';
 import Home from './pages/Home';
 import About from './pages/About';
 import ServicesPage from './pages/Services';
-import SegmentPage from './pages/SegmentPage';
+import ResidentialPage from './pages/ResidentialPage';
 import LocationPage from './pages/LocationPage';
 import ServiceDetail from './pages/ServiceDetail';
-import SpecialOffers from './pages/SpecialOffers';
 import Faqs from './pages/Faqs';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -24,15 +23,12 @@ export const appRoutes: AppRoute[] = [
   { path: '/', element: <Home />, priority: 1.0 },
   { path: '/about', element: <About />, priority: 0.6 },
   { path: '/services', element: <ServicesPage />, priority: 0.9 },
-  { path: '/services/residential', element: <SegmentPage segment="residential" />, priority: 0.9 },
-  { path: '/services/commercial', element: <SegmentPage segment="commercial" />, priority: 0.9 },
+  { path: '/services/residential', element: <ResidentialPage />, priority: 0.9 },
   ...services.map(s => ({ path: `/services/${s.slug}`, element: <ServiceDetail slug={s.slug} />, priority: 0.8 })),
   ...locationList.flatMap(l => [
     { path: `/locations/${l.id}`, element: <LocationPage locationId={l.id} />, priority: 0.95 },
-    { path: `/locations/${l.id}/residential`, element: <SegmentPage segment="residential" locationId={l.id} />, priority: 0.9 },
-    { path: `/locations/${l.id}/commercial`, element: <SegmentPage segment="commercial" locationId={l.id} />, priority: 0.9 },
+    { path: `/locations/${l.id}/residential`, element: <ResidentialPage locationId={l.id} />, priority: 0.9 },
   ]),
-  { path: '/special-offers', element: <SpecialOffers />, priority: 0.7 },
   { path: '/faqs', element: <Faqs />, priority: 0.6 },
   { path: '/contact', element: <Contact />, priority: 0.8 },
   { path: '/privacy-policy', element: <PrivacyPolicy />, priority: 0.2 },

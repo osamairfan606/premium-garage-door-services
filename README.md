@@ -1,6 +1,6 @@
 # Premium Garage Door — Chicago & Indianapolis website
 
-A multi-page marketing site for Premium Garage Door. It is built with React 18, TypeScript, Vite, Tailwind CSS, Framer Motion and Lucide icons. Every route is **prerendered to static HTML**, so each page ships with its own title, meta description, canonical URL, Open Graph tags and structured data. The site then hydrates into a single-page app for fast navigation and animation.
+A multi-page marketing site for Premium Garage Door, focused on residential garage door service. It is built with React 18, TypeScript, Vite, Tailwind CSS, Framer Motion and Lucide icons. Every route is **prerendered to static HTML**, so each page ships with its own title, meta description, canonical URL, Open Graph tags and structured data. The site then hydrates into a single-page app for fast navigation and animation.
 
 ## Quick start
 
@@ -20,8 +20,7 @@ Requires Node 18+.
 | **Phone numbers, service areas, ZIP codes, addresses, city copy and FAQs** | `src/config/locations.ts` |
 | Company name, legal name, hours, social links, email, site URL | `src/config/site.ts` |
 | Services: names, descriptions, inclusions and FAQs | `src/config/services.ts` |
-| Special offers: switch them on or off, or add an expiry date | `src/config/offers.ts` |
-| Benefits, “why choose us”, process steps, general FAQs, gallery, brands, **reviews** | `src/config/content.ts` |
+| Benefits, “why choose us”, process steps, general FAQs, gallery, brands, **customer reviews** | `src/config/content.ts` |
 | Navigation menus | `src/config/navigation.ts` |
 
 ### Phone routing (single source of truth)
@@ -36,11 +35,9 @@ Requires Node 18+.
 These items are deliberately left empty or configurable. The original site did not provide them, so none of them have been invented:
 
 - **Service areas, ZIP codes and street addresses** (`locations.ts`). While these are empty, the site says "Chicago and nearby communities — call to confirm".
-- **Customer reviews** (`content.ts → reviews`). The reviews section stays hidden until verified reviews are added.
+- **Customer reviews** (`content.ts → reviews`). A reviews section is placed on the Home, About, Services, Residential, Location and Service pages. It stays hidden until genuine reviews are added, and reviews tagged with a `location` only show on that city’s pages.
 - **Social media profiles** (`site.ts → social`). These stay hidden while the list is empty.
 - **LocalBusiness schema** (`site.ts → enableLocalBusinessSchema`). This is off until verified addresses exist. In the meantime, location pages emit `Service` and `Organization` schema with the location-specific phone numbers.
-- **Offers.** The seven offers come from the current site's flyers. No expiry dates were published, so every offer carries "confirm eligibility when you call" wording. Retire an offer with `active: false`, or add an `expires: 'YYYY-MM-DD'` date and it will hide itself after that date.
-- **Commercial services.** The original site focuses on residential work. The commercial pages describe the confirmed services (springs, cables, rollers, tracks, openers, maintenance and installation) applied to business properties. They also tell visitors that the team will confirm the specific door system before booking. They do not promise rolling-steel doors, commercial emergency response times or guaranteed arrival times.
 - **Legal pages.** These are general templates and should be reviewed by a lawyer.
 - **Photography.** Images marked `stock` in `src/config/images.generated.ts` are Pexels-licensed stock photos and are labelled as illustrative on the site. To replace them with real project photos:
   1. Drop the photos into `assets-src/company/`.
@@ -64,7 +61,7 @@ Any endpoint works if it accepts JSON and returns a 2xx response on success. Opt
 
 ## SEO
 
-- There are 25 prerendered routes, each with a unique title, description, canonical URL and Open Graph/Twitter tags.
+- There are 21 prerendered routes, each with a unique title, description, canonical URL and Open Graph/Twitter tags.
 - Structured data:
   - Organization schema, with both city phone numbers, on every page.
   - BreadcrumbList on inner pages.
@@ -106,6 +103,6 @@ The QA scripts drive Microsoft Edge through `playwright-core`. To use a differen
 
 ## Image credits
 
-- **Company assets:** the logo, home hero, team photo and offer flyers are from premiumdoorservices.com.
+- **Company assets:** the logo, home hero and team photo are from premiumdoorservices.com.
 - **Stock photography:** from [Pexels](https://www.pexels.com/license/), used under the Pexels License. Attribution is not required.
 - **Brand logos:** shown on the original site to indicate brands the team services.

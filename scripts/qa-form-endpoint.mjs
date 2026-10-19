@@ -28,7 +28,6 @@ const check = (name, ok, d = '') => results.push(`${ok ? 'PASS' : 'FAIL'}  ${nam
 async function fillAndSubmit(page) {
   await page.locator('input[data-field="fullName"]').fill('Jordan Test');
   await page.locator('input[data-field="phone"]').fill('3125550199');
-  await page.locator('input[type="radio"][value="commercial"]').check();
   await page.locator('select[data-field="service"]').selectOption('Opener Not Working');
   await page.locator('input[data-field="address"]').fill('60601');
   await page.locator('input[data-field="consent"]').check();

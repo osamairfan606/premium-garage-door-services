@@ -35,11 +35,10 @@ export default function LocationCards({ id = 'locations' }: { id?: string }) {
                   </span>
                   {l.phoneDisplay}
                 </a>
-                <div className="mt-7 grid gap-2 border-t border-white/10 pt-6 sm:grid-cols-3">
+                <div className="mt-7 grid gap-2 border-t border-white/10 pt-6 sm:grid-cols-2">
                   {[
                     { label: 'Overview', to: `/locations/${l.id}` },
-                    { label: 'Residential', to: `/locations/${l.id}/residential` },
-                    { label: 'Commercial', to: `/locations/${l.id}/commercial` },
+                    { label: 'Residential services', to: `/locations/${l.id}/residential` },
                   ].map(link => (
                     <Link key={link.to} to={link.to} className="group/l flex items-center justify-between rounded-md border border-white/10 px-4 py-3 text-sm font-semibold text-white transition hover:border-gold-400/50 hover:bg-white/5">
                       {link.label}

@@ -4,10 +4,8 @@ import PageHero from '../components/sections/PageHero';
 import Button from '../components/ui/Button';
 import CallChooser from '../components/layout/CallChooser';
 import ServicesGrid from '../components/sections/ServicesGrid';
-import SegmentSplit from '../components/sections/SegmentSplit';
 import { Process, BrandStrip } from '../components/sections/Highlights';
-import OffersSection from '../components/sections/Offers';
-import { FaqSection } from '../components/sections/Faq';
+import { FaqSection, Reviews } from '../components/sections/Faq';
 import FinalCta from '../components/sections/FinalCta';
 import { generalFaqs } from '../config/content';
 import { breadcrumbSchema } from '../lib/seo';
@@ -27,7 +25,7 @@ export default function ServicesPage() {
         eyebrow="All services"
         title="Garage door services,"
         accent="handled end to end."
-        lead="Repair, installation, opener setup, spring replacement, cable repair, maintenance and full garage door system upgrades — for homes and businesses in Chicago and Indianapolis."
+        lead="Repair, installation, opener setup, spring replacement, cable repair, maintenance and full garage door system upgrades — for homeowners in Chicago and Indianapolis."
         image="res-modern-dusk"
         imageAlt="Contemporary home at dusk with a modern garage"
       >
@@ -36,9 +34,8 @@ export default function ServicesPage() {
       </PageHero>
       <ServicesGrid eyebrow="What we do" title={<>Nine core services, <span className="accent-serif text-gold-500">one standard</span></>} lead="Every visit starts with an accurate diagnosis and a free onsite estimate. Choose a service to learn more." />
       <BrandStrip />
-      <SegmentSplit />
       <Process />
-      <OffersSection />
+      <Reviews />
       <FaqSection faqs={generalFaqs.slice(0, 5)} />
       <FinalCta />
     </>

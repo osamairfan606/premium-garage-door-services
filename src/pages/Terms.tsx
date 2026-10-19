@@ -2,14 +2,13 @@ import { Link } from 'react-router-dom';
 import Legal from './Legal';
 import { site } from '../config/site';
 import { locationList } from '../config/locations';
-import { OFFER_TERMS } from '../config/offers';
 
 export default function Terms() {
   return (
     <Legal
       title="Terms & Conditions"
       path="/terms"
-      description={`Terms and conditions for using the ${site.name} website, requesting estimates and redeeming offers.`}
+      description={`Terms and conditions for using the ${site.name} website and requesting estimates.`}
       sections={[
         {
           title: 'Acceptance of terms',
@@ -26,10 +25,6 @@ export default function Terms() {
         {
           title: 'Same-day and emergency service',
           body: <p>Same-day service is offered whenever possible and depends on technician availability, location and parts. Emergency service is available 24/7 by phone; arrival times are confirmed when you call.</p>,
-        },
-        {
-          title: 'Special offers',
-          body: <p>{OFFER_TERMS} Unless stated otherwise, offers cannot be exchanged for cash.</p>,
         },
         {
           title: 'Satisfaction guarantee',
