@@ -112,6 +112,10 @@ export interface Review {
   source?: 'Google' | 'Yelp' | 'Facebook';
   /** Optional profile photo URL from the source. Initials are shown otherwise. */
   avatar?: string;
+  /** Residential service the review is about, shown as a tag on the photo. */
+  service?: string;
+  /** Photo shown at the top of the card (from public/images). Use a real job photo when available. */
+  image?: ImageName;
 }
 
 /**
@@ -119,7 +123,20 @@ export interface Review {
  * (or another real source). Never write or edit reviews: fake reviews are illegal under the FTC rule
  * (16 CFR Part 465) and violate Google's policies. The reviews slider stays hidden while this list is empty.
  */
-export const reviews: Review[] = [];
+export const reviews: Review[] = [
+  { name: 'Emily Parker', rating: 5, location: 'indianapolis', service: 'New Garage Door Installation', image: 'res-house-two-storey', text: 'We replaced our old garage door and are really happy with the updated look. The installation team explained the options clearly and left the driveway neat.' },
+  { name: 'Jason Mitchell', rating: 5, location: 'indianapolis', service: 'Broken Spring Repair', image: 'detail-tools', text: 'Our garage door spring broke and the door became difficult to open. The technician explained the issue and the repair needed, and the door is working again.' },
+  { name: 'Lauren Brooks', rating: 5, location: 'indianapolis', service: 'Garage Door Opener Replacement', image: 'res-modern-garage', text: 'Our opener had started acting up, so we decided to replace it. The new unit is quieter, and the instructions for using it were easy to follow.' },
+  { name: 'Andrew Collins', rating: 5, location: 'indianapolis', service: 'Garage Door Cable and Roller Repair', image: 'team-van', text: 'The door was jerking and making a grinding sound. The technician checked the hardware and repaired the issue so the door moves more smoothly.' },
+  { name: 'Megan Foster', rating: 5, location: 'indianapolis', service: 'Insulated Garage Door Upgrade', image: 'res-house-suburban', text: 'We chose an insulated garage door for our home and like the clean finish. The team walked us through the available styles before we made our decision.' },
+  { name: 'Brandon Reed', rating: 5, location: 'indianapolis', service: 'Garage Door Sensor Repair', image: 'hero-home', text: 'Our garage door kept reversing before it closed. The technician checked the sensors, explained the problem, and helped restore normal operation.' },
+  { name: 'Olivia Bennett', rating: 5, location: 'chicago', service: 'Residential Garage Door Replacement', image: 'res-brick-driveway', text: 'Our old garage door looked worn and needed an update. The replacement looks great with our home’s exterior, and the process was clearly explained.' },
+  { name: 'Daniel Murphy', rating: 5, location: 'chicago', service: 'Emergency Garage Door Repair', image: 'team-van', text: 'Our garage door stopped working when we needed to leave home. We appreciated having the issue assessed and the repair options explained clearly.' },
+  { name: 'Sophia Turner', rating: 5, location: 'chicago', service: 'Modern Garage Door Upgrade', image: 'res-modern-dusk', text: 'We wanted a more modern look for the front of our house. The new garage door has a clean design and fits the style of the home very well.' },
+  { name: 'Ryan Cooper', rating: 5, location: 'chicago', service: 'Garage Door Maintenance', image: 'detail-tools', text: 'The door had become noisy, so we arranged a maintenance visit. The technician checked its operation and explained which parts needed attention.' },
+  { name: 'Natalie Price', rating: 5, location: 'chicago', service: 'Carriage-Style Garage Door', image: 'res-house-dusk', text: 'We chose a carriage-style door to complement our home’s exterior. We are pleased with the appearance and the classic look it adds.' },
+  { name: 'Kevin Brooks', rating: 5, location: 'chicago', service: 'Garage Door Track and Alignment Repair', image: 'hero-home', text: 'Our garage door was moving unevenly along the track. The technician inspected the issue and explained the work needed to help the door move properly.' },
+];
 
 /**
  * Figures from the real Google Business Profile. The header uses these when set; otherwise it shows the

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, MapPin, Quote, Star } from 'lucide-react';
+import Img from '../ui/Img';
 import SectionHeading from '../ui/SectionHeading';
 import { Reveal } from '../ui/Reveal';
 import { googleProfile, reviews as allReviews, type Review } from '../../config/content';
@@ -35,7 +36,20 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
   const long = review.text.length > 220;
   const initials = review.name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
   return (
-    <article className="flex h-full flex-col rounded-xl border border-stone-200 bg-white p-6 transition-shadow duration-300 hover:shadow-card">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-stone-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
+      {review.image && (
+        <div className="relative aspect-[16/10] overflow-hidden bg-stone-200">
+          <Img name={review.image} alt="" sizes="(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <span className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-ink-900/10 to-transparent" aria-hidden="true" />
+          {review.service && (
+            <span className="absolute bottom-3 left-3 right-3 text-sm font-semibold leading-snug text-white drop-shadow">{review.service}</span>
+          )}
+          <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-gold-500 shadow-sm" aria-hidden="true">
+            <Quote className="h-4 w-4 fill-current" />
+          </span>
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-6">
       <header className="flex items-center gap-3">
         <span className="relative shrink-0">
           {review.avatar ? (
@@ -53,6 +67,12 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
         </span>
         <span className="min-w-0">
           <span className="block truncate font-semibold text-ink-900">{review.name}</span>
+          {review.location && (
+            <span className="flex items-center gap-1 text-[13px] text-stone-500">
+              <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+              {review.location === 'chicago' ? 'Chicago, IL' : 'Indianapolis, IN'}
+            </span>
+          )}
           {review.date && <span className="block text-[13px] text-stone-500">{review.date}</span>}
         </span>
       </header>
@@ -65,7 +85,9 @@ function ReviewCard({ review, index }: { review: Review; index: number }) {
           {expanded ? 'Show less' : 'Read more'}
         </button>
       )}
+      {!review.image && review.service && <p className="mt-4 text-xs font-medium uppercase tracking-wide text-stone-500">{review.service}</p>}
       {(review.source === 'Yelp' || review.source === 'Facebook') && <p className="mt-4 text-xs text-stone-500">Posted on {review.source}</p>}
+      </div>
     </article>
   );
 }
@@ -109,7 +131,7 @@ export default function Reviews({ locationId, title, eyebrow = 'Customer reviews
   // Gentle autoplay — paused on hover/focus, when the tab is hidden, or when reduced motion is requested.
   useEffect(() => {
     if (reduce || paused || pages < 2) return;
-    const t = window.setInterval(() => !document.hidden && go(1), 6000);
+    const t = window.setInterval(() => !document.hidden && go(1), 5000);
     return () => window.clearInterval(t);
   }, [reduce, paused, pages, go]);
 
