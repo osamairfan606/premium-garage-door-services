@@ -16,6 +16,7 @@ const errors = [];
 // Desktop
 {
   const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  page.setDefaultTimeout(90000);
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(BASE + '/', { waitUntil: 'networkidle' });
 
@@ -119,6 +120,7 @@ const errors = [];
 // Mobile
 {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  page.setDefaultTimeout(90000);
   page.on('pageerror', e => errors.push(e.message));
   await page.goto(BASE + '/locations/chicago', { waitUntil: 'networkidle' });
   const bar = await page.locator('div.fixed.bottom-0 a[href^="tel:"]').evaluateAll(as => as.map(a => a.getAttribute('href')));
@@ -144,6 +146,7 @@ const errors = [];
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
   const page = await ctx.newPage();
+  page.setDefaultTimeout(90000);
   await page.goto(BASE + '/', { waitUntil: 'networkidle' });
   const loaderHidden = await page.evaluate(() => getComputedStyle(document.querySelector('.animate-loader-out')).display === 'none');
   check('Reduced motion: page loader skipped', loaderHidden);

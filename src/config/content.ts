@@ -99,11 +99,38 @@ export const brands: { name: string; image: ImageName }[] = [
   { name: 'Windsor Republic Doors', image: 'brand-windsor-republic' },
 ];
 
+export interface Review {
+  name: string;
+  /** 1–5 stars, exactly as given by the customer. */
+  rating: number;
+  text: string;
+  /** Date shown on the card, as it appears on the source, e.g. "2 weeks ago" or "March 2026". */
+  date?: string;
+  /** Show only on this city's pages (also shown on general pages). Omit if unknown. */
+  location?: 'chicago' | 'indianapolis';
+  /** Where the review was posted. Google branding appears only for 'Google'; omit for reviews collected directly by the business. */
+  source?: 'Google' | 'Yelp' | 'Facebook';
+  /** Optional profile photo URL from the source. Initials are shown otherwise. */
+  avatar?: string;
+}
+
 /**
- * Verified customer reviews ONLY. The section stays hidden while this list is empty.
- * Example: { quote: '…', name: 'Jane D.', location: 'chicago', source: 'Google', rating: 5 }
+ * GENUINE customer reviews ONLY — copy them word-for-word from the business's Google Business Profile
+ * (or another real source). Never write or edit reviews: fake reviews are illegal under the FTC rule
+ * (16 CFR Part 465) and violate Google's policies. The reviews slider stays hidden while this list is empty.
  */
-export const reviews: { quote: string; name: string; location?: 'chicago' | 'indianapolis'; source?: string; rating?: number }[] = [];
+export const reviews: Review[] = [];
+
+/**
+ * Figures from the real Google Business Profile. The header uses these when set; otherwise it shows the
+ * average of the reviews listed above. Leave null rather than guessing.
+ */
+export const googleProfile: { rating: number | null; reviewCount: number | null; profileUrl: string; writeReviewUrl: string } = {
+  rating: null,
+  reviewCount: null,
+  profileUrl: '',
+  writeReviewUrl: '',
+};
 
 export const timeSlots = [
   '08:00 AM – 10:00 AM', '10:00 AM – 12:00 PM', '12:00 PM – 02:00 PM', '02:00 PM – 04:00 PM',

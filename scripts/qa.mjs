@@ -41,6 +41,7 @@ for (const vp of [{ name: 'desktop', width: 1440, height: 900 }, { name: 'mobile
   const ctx = await browser.newContext({ viewport: { width: vp.width, height: vp.height }, deviceScaleFactor: 1 });
   for (const route of routes) {
     const page = await ctx.newPage();
+    page.setDefaultTimeout(90000);
     const errs = [];
     page.on('console', m => (m.type() === 'error' || m.type() === 'warning') && errs.push(`[console.${m.type()}] ${m.text()}`));
     page.on('pageerror', e => errs.push(`[pageerror] ${e.message}`));

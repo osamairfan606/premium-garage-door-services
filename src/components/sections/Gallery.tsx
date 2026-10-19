@@ -2,11 +2,9 @@ import Img from '../ui/Img';
 import SectionHeading from '../ui/SectionHeading';
 import { Stagger, StaggerItem } from '../ui/Reveal';
 import { gallery } from '../../config/content';
-import { imageManifest } from '../../config/images.generated';
 import { cn } from '../../lib/cn';
 
 export default function Gallery() {
-  const hasStock = gallery.some(g => imageManifest[g.image].source === 'stock');
   return (
     <section className="section bg-white">
       <div className="container">
@@ -24,11 +22,6 @@ export default function Gallery() {
             </StaggerItem>
           ))}
         </Stagger>
-        {hasStock && (
-          <p className="mt-5 text-xs text-stone-500">
-            Some images are licensed stock photography shown for illustration and are not photos of specific Premium Garage Door projects.
-          </p>
-        )}
       </div>
     </section>
   );

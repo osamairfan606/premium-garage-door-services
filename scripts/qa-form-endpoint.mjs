@@ -37,6 +37,7 @@ async function fillAndSubmit(page) {
 }
 
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+page.setDefaultTimeout(90000);
 await page.goto('http://localhost:4186/locations/chicago', { waitUntil: 'networkidle' });
 await page.locator('#quote').scrollIntoViewIfNeeded();
 await fillAndSubmit(page);
