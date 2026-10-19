@@ -39,7 +39,7 @@ These items are deliberately left empty or configurable. The original site did n
 - **Social media profiles** (`site.ts → social`). These stay hidden while the list is empty.
 - **LocalBusiness schema** (`site.ts → enableLocalBusinessSchema`). This is off until verified addresses exist. In the meantime, location pages emit `Service` and `Organization` schema with the location-specific phone numbers.
 - **Legal pages.** These are general templates and should be reviewed by a lawyer.
-- **Photography.** Images marked `stock` in `src/config/images.generated.ts` are Pexels-licensed stock photos and are labelled as illustrative on the site. To replace them with real project photos:
+- **Photography.** Images marked `stock` in `src/config/images.generated.ts` are Pexels-licensed stock photos (disclosed in the Terms page). To replace them with real project photos:
   1. Drop the photos into `assets-src/company/`.
   2. Run `npm run images`.
   3. Update the image names in the config files.
@@ -71,7 +71,9 @@ Any endpoint works if it accepts JSON and returns a 2xx response on success. Opt
 
 ## Deployment
 
-Upload `/dist` to any static host, for example Netlify, Vercel, Cloudflare Pages or S3 with CloudFront.
+For premiumdoorservices.com on GoDaddy, see [docs/deploy-godaddy.md](docs/deploy-godaddy.md). The site is deployed next to WordPress on the existing Managed WordPress plan.
+
+Otherwise, upload `/dist` to any static host, for example Netlify, Vercel, Cloudflare Pages or S3 with CloudFront.
 
 - Each route exists both as `route/index.html` and as `route.html`, so clean URLs such as `/about` resolve on any host.
 - Configure the host to serve `404.html` for unknown paths.

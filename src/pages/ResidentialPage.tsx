@@ -153,7 +153,6 @@ export default function ResidentialPage({ locationId }: { locationId?: LocationI
               </StaggerItem>
             ))}
           </Stagger>
-          <p className="mt-5 text-xs text-stone-500">Style imagery is illustrative stock photography.</p>
         </div>
       </section>
 

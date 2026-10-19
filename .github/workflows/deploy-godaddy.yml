@@ -1,0 +1,120 @@
+name: Deploy to GoDaddy Managed WordPress
+
+# Copies the static build into the site's web root next to WordPress, over SSH/rsync.
+# Safety rules:
+#   - never deletes anything on the server (no --delete)
+#   - never uploads .htaccess, index.php, wp-* or xmlrpc.php
+#   - refuses to overwrite any existing server file that an earlier deploy of this site did not create
+#     (tracked in .static-site-manifest in the web root)
+#   - on production, the home page (root index.html) is held back until GODADDY_HOME_ENABLED is "true"
+#
+# Settings are read from the GitHub environment (staging / production), so each can point at its own server.
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ vars.SITE_PUBLIC_URL }}
+    env:
+      MANIFEST: .static-site-manifest
+    steps:
+      - name: Load environment settings
+        env:
+          HOST: ${{ vars.GODADDY_SSH_HOST }}
+          PORT: ${{ vars.GODADDY_SSH_PORT || '22' }}
+          SSH_USER: ${{ vars.GODADDY_SSH_USER }}
+          REMOTE_DIR: ${{ vars.GODADDY_REMOTE_DIR || '/html' }}
+          SITE_URL: ${{ vars.SITE_PUBLIC_URL }}
+          HOME_ENABLED: ${{ inputs.environment == 'staging' || vars.GODADDY_HOME_ENABLED == 'true' }}
+        run: |
+          for v in HOST PORT SSH_USER REMOTE_DIR SITE_URL HOME_ENABLED; do
+            printf '%s=%s\n' "$v" "${!v}" >> "$GITHUB_ENV"
+          done
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: dist
+
+      - name: Check settings
+        run: |
+          for v in HOST SSH_USER REMOTE_DIR SITE_URL; do
+            [ -n "${!v}" ] || { echo "::error::Variable for $v is not set in the ${{ inputs.environment }} environment"; exit 1; }
+          done
+          echo "Target: $SSH_USER@$HOST:$REMOTE_DIR  (home page upload: $HOME_ENABLED)"
+
+      - name: Set up SSH
+        env:
+          SSH_KEY: ${{ secrets.GODADDY_SSH_KEY }}
+          KNOWN_HOSTS: ${{ secrets.GODADDY_KNOWN_HOSTS }}
+        run: |
+          [ -n "$SSH_KEY" ] && [ -n "$KNOWN_HOSTS" ] || { echo "::error::GODADDY_SSH_KEY and GODADDY_KNOWN_HOSTS secrets are required"; exit 1; }
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          printf '%s\n' "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          printf 'Host target\n  HostName %s\n  Port %s\n  User %s\n  IdentityFile ~/.ssh/deploy_key\n  IdentitiesOnly yes\n  StrictHostKeyChecking yes\n' \
+            "$HOST" "$PORT" "$SSH_USER" > ~/.ssh/config
+          sudo apt-get install -y -q rsync > /dev/null
+
+      - name: Verify target is the WordPress web root
+        run: |
+          ssh target "test -f '$REMOTE_DIR/wp-config.php' && test -d '$REMOTE_DIR/wp-content'" \
+            || { echo "::error::$REMOTE_DIR does not look like the WordPress web root; refusing to deploy"; exit 1; }
+          ssh target "cat '$REMOTE_DIR/$MANIFEST' 2>/dev/null || true" | sort -u > owned.txt
+          echo "Files owned by earlier deploys: $(wc -l < owned.txt)"
+
+      - name: Plan upload (dry run)
+        run: |
+          EXCLUDES=(--exclude=/.htaccess --exclude=/index.php --exclude='/wp-*' --exclude=/xmlrpc.php --exclude="/$MANIFEST")
+          [ "$HOME_ENABLED" = "true" ] || EXCLUDES+=(--exclude=/index.html)
+          printf '%s\n' "${EXCLUDES[@]}" > excludes.args
+          rsync -rlcn --itemize-changes "${EXCLUDES[@]}" dist/ "target:$REMOTE_DIR/" > plan.txt
+          # ">f+++++++++" = new file; any other ">f" line replaces a file that already exists on the server.
+          grep '^>f' plan.txt | grep -v '^>f+++++++++' | cut -c13- | sort -u > overwrites.txt || true
+          comm -23 overwrites.txt owned.txt > conflicts.txt
+          echo "New files:      $(grep -c '^>f+++++++++' plan.txt || true)"
+          echo "Updated files:  $(wc -l < overwrites.txt)"
+          if [ -s conflicts.txt ]; then
+            echo "::error::These server files already exist and were not created by this site's deploys; nothing was uploaded:"
+            cat conflicts.txt
+            exit 1
+          fi
+
+      - name: Upload (adds and replaces only, never deletes)
+        run: |
+          mapfile -t EXCLUDES < excludes.args
+          rsync -rlcz --itemize-changes "${EXCLUDES[@]}" dist/ "target:$REMOTE_DIR/"
+          (cat owned.txt; cd dist && find . -type f | sed 's|^\./||') | sort -u > manifest.txt
+          [ "$HOME_ENABLED" = "true" ] || sed -i '/^index\.html$/d' manifest.txt
+          rsync -c manifest.txt "target:$REMOTE_DIR/$MANIFEST"
+
+      - name: Smoke test
+        run: |
+          code() { curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$1"; }
+          fail=0
+          for p in /about/ /services/ /contact/ /locations/chicago/ /locations/indianapolis/ /sitemap.xml; do
+            c=$(code "$SITE_URL$p"); echo "$c $p"; [ "$c" = "200" ] || fail=1
+          done
+          c=$(code "$SITE_URL/wp-admin/"); echo "$c /wp-admin/ (expect 302 to login)"; [ "$c" = "302" ] || fail=1
+          if [ "$HOME_ENABLED" != "true" ]; then
+            curl -s --max-time 30 "$SITE_URL/" | grep -q 'content="WordPress' \
+              && echo "Home page is still WordPress (expected before cutover)" \
+              || { echo "::error::Home page no longer looks like WordPress"; fail=1; }
+          fi
+          exit $fail
+
+      - name: Clean up key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

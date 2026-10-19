@@ -1,0 +1,28 @@
+# Rules to add at the TOP of the WordPress web root's .htaccess (/html/.htaccess) at cutover only.
+# Paste them above "# BEGIN WordPress" and leave the WordPress block untouched.
+# Rollback: delete everything from "# BEGIN Premium static site" to "# END Premium static site".
+# This file is not part of the build and is never uploaded by the workflow.
+
+# BEGIN Premium static site
+DirectoryIndex index.html index.php
+ErrorDocument 404 /404.html
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# /about/ -> /about (only for pages of the static site)
+RewriteCond %{REQUEST_URI} ^/(.+)/$
+RewriteCond %{DOCUMENT_ROOT}/%1.html -f
+RewriteRule ^ /%1 [R=301,L]
+
+# /about -> /about.html
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+)$ /$1.html [L]
+
+# Unknown paths -> static 404 page. WordPress admin, login, REST API and files keep working.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(wp-admin|wp-login\.php|wp-json|wp-content|wp-includes|wp-cron\.php|xmlrpc\.php|index\.php)
+RewriteRule ^ - [R=404,L]
+</IfModule>
+# END Premium static site
