@@ -2,6 +2,15 @@
 
 The site is hosted on the client's existing **GoDaddy Managed WordPress Deluxe** plan and domain. The build is plain static files, which are copied into the WordPress web root (`/html`) **next to** WordPress. Nothing of WordPress is changed or deleted, and DNS is not changed.
 
+## Verified server facts (2026-10-20)
+
+- **Production site ID:** `1170222`. Deploys use GoDaddy's CI/CD deploy user `git_deployer_84f1e0116a_1170222` at `1170222.us16.ssh.myftpupload.com`, with SSH key login only.
+  - Normal SFTP users need both a key and a password, so they are not used here.
+  - The host in GoDaddy's copy-paste snippet (`7bk.cbf.myftpupload.com`) did not answer on port 22.
+- **Web root:** `/html` is the WordPress install. WordPress core files are owned by `root`, so a deploy cannot change them.
+- **The server is not Apache.** GoDaddy translates `.htaccess`, and `/html/.htaccess.log` shows it skips `RewriteCond -f/-d`. The rules in `deploy/htaccess-cutover.txt` must be tested on this platform before cutover.
+- **GoDaddy's official workflow is not used.** It uploads the repository source instead of `dist/`, and its default cleanup deletes server files that are not in the repository. Its ignore list does not cover `wp-config.php`, themes or plugins.
+
 ## How it works
 
 - `npm run build` produces `dist/`. None of its files share a name with WordPress files (`index.php`, `wp-*`, `.htaccess`, `xmlrpc.php`).
