@@ -56,15 +56,20 @@ jobs:
 
   staging:
     needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.GODADDY_DEPLOY_ENABLED == 'true'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.GODADDY_DEPLOY_ENABLED == 'true' && vars.GODADDY_STAGING_ENABLED == 'true'
     uses: ./.github/workflows/deploy-godaddy.yml
     with:
       environment: staging
     secrets: inherit
 
+  # Runs after a successful staging deploy, or straight after the build when no staging site is configured.
   production:
-    needs: staging
-    if: vars.GODADDY_PRODUCTION_ENABLED == 'true'
+    needs: [build, staging]
+    if: >-
+      always() && needs.build.result == 'success' &&
+      (needs.staging.result == 'success' || needs.staging.result == 'skipped') &&
+      github.event_name != 'pull_request' && github.ref == 'refs/heads/main' &&
+      vars.GODADDY_DEPLOY_ENABLED == 'true' && vars.GODADDY_PRODUCTION_ENABLED == 'true'
     uses: ./.github/workflows/deploy-godaddy.yml
     with:
       environment: production
