@@ -49,7 +49,8 @@ export default function Footer() {
             <h2 className="font-sans text-xs font-semibold uppercase tracking-eyebrow text-white">Services</h2>
             <ul className="mt-5 grid grid-cols-1 gap-3 text-[15px] sm:grid-cols-2 lg:grid-cols-1">
               <li><Link to="/services/residential" className="link-underline transition hover:text-white">Residential Services</Link></li>
-              {serviceLinks.slice(0, 8).map(l => (
+              <li><Link to="/services/commercial" className="link-underline transition hover:text-white">Commercial Services</Link></li>
+              {serviceLinks.slice(0, 7).map(l => (
                 <li key={l.to}><Link to={l.to} className="link-underline transition hover:text-white">{l.label}</Link></li>
               ))}
             </ul>
@@ -67,6 +68,7 @@ export default function Footer() {
                 <ul className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
                   <li><Link to={`/locations/${l.id}`} className="inline-flex items-center gap-1 hover:text-white">Service area <ArrowUpRight className="h-3 w-3" aria-hidden="true" /></Link></li>
                   <li><Link to={`/locations/${l.id}/residential`} className="hover:text-white">Residential</Link></li>
+                  <li><Link to={`/services/commercial#${l.id}`} className="hover:text-white">Commercial</Link></li>
                 </ul>
               </div>
             ))}

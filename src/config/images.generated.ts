@@ -252,6 +252,39 @@ export const imageManifest = {
       480
     ],
     "source": "company"
+  },
+  "com-numbered-doors": {
+    "width": 1800,
+    "height": 1200,
+    "widths": [
+      480,
+      800,
+      1280,
+      1800
+    ],
+    "source": "stock"
+  },
+  "com-brick-warehouse": {
+    "width": 1800,
+    "height": 2700,
+    "widths": [
+      480,
+      800,
+      1280,
+      1800
+    ],
+    "source": "stock"
+  },
+  "com-loading-dock": {
+    "width": 1800,
+    "height": 1200,
+    "widths": [
+      480,
+      800,
+      1280,
+      1800
+    ],
+    "source": "stock"
   }
 } as const;
 export type ImageName = keyof typeof imageManifest;

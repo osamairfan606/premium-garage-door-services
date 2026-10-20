@@ -13,6 +13,10 @@ The site is hosted on the client's existing **GoDaddy Managed WordPress Deluxe**
 
 > GoDaddy's own CI/CD action (`godaddy-wordpress/gd-wordpress-deployer`) is **not** used. It is built for deploying WordPress code, runs WordPress health checks, and by default deletes server files that are not in the repository (`cleanup_deleted_files: yes`). Pointed at `/html`, it would remove WordPress.
 
+## Forms
+
+The quote form emails requests through `/api/quote.php` and WordPress. Setup is in [forms-email.md](forms-email.md).
+
 ## Workflow safety rules
 
 The workflows are `.github/workflows/deploy.yml` and `deploy-godaddy.yml`.
@@ -81,7 +85,7 @@ Add these under Secrets and variables → Actions → Variables:
 | Name | Value |
 |---|---|
 | `VITE_SITE_URL` | `https://premiumdoorservices.com` |
-| `VITE_FORM_ENDPOINT` | quote form endpoint, if any |
+| `VITE_FORM_ENDPOINT` | leave unset (defaults to `/api/quote.php`) |
 | `GODADDY_DEPLOY_ENABLED` | set to `true` only when staging is ready to receive deploys |
 | `GODADDY_PRODUCTION_ENABLED` | leave unset until staging has passed testing |
 | `GODADDY_HOME_ENABLED` | leave unset until the approved cutover |

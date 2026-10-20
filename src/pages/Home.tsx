@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { m, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, CalendarCheck, Check, MapPin, Phone } from 'lucide-react';
+import { ArrowRight, BadgePercent, CalendarCheck, Check, MapPin, Phone } from 'lucide-react';
 import Seo from '../components/Seo';
 import Img from '../components/ui/Img';
 import Button from '../components/ui/Button';
@@ -14,8 +14,9 @@ import LocationCards from '../components/sections/LocationCards';
 import Gallery from '../components/sections/Gallery';
 import { FaqSection, Reviews } from '../components/sections/Faq';
 import FinalCta from '../components/sections/FinalCta';
+import OfferBanner, { OFFER_TERMS_PATH } from '../components/sections/OfferBanner';
 import { locationList } from '../config/locations';
-import { generalFaqs } from '../config/content';
+import { firstTimeOffer, generalFaqs } from '../config/content';
 import { faqSchema } from '../lib/seo';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -38,6 +39,12 @@ function HomeHero() {
 
       <m.div style={{ opacity: fade }} className="container">
         <m.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.12, delayChildren: 0.35 } } }} className="max-w-3xl">
+          <m.div variants={item}>
+            <Link to={OFFER_TERMS_PATH} className="mb-6 inline-flex items-center gap-2 rounded-full border border-gold-300/40 bg-gold-400/15 px-4 py-1.5 text-[13px] font-semibold text-gold-100 backdrop-blur transition hover:bg-gold-400/25">
+              <BadgePercent className="h-4 w-4 text-gold-300" aria-hidden="true" />
+              {firstTimeOffer.headline} <span className="font-normal text-white/60">· T&amp;C apply</span>
+            </Link>
+          </m.div>
           <m.p variants={item} className="eyebrow eyebrow-light">Chicago, IL · Indianapolis, IN</m.p>
           <h1 className="mt-6 text-[2.75rem] font-semibold leading-[0.98] sm:text-6xl lg:text-[5.25rem]">
             <m.span variants={item} className="block">Garage door repair</m.span>
@@ -104,6 +111,7 @@ export default function Home() {
       />
       <HomeHero />
       <TrustStrip />
+      <OfferBanner />
 
       <section className="section-tight bg-stone-50">
         <div className="container grid items-center gap-12 lg:grid-cols-2 lg:gap-20">

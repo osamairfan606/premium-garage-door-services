@@ -148,6 +148,8 @@ export default function QuoteForm({ defaultLocation, defaultService, lockLocatio
       phone: formatPhone(state.phone),
       submittedAt: new Date().toISOString(),
       page: typeof window !== 'undefined' ? window.location.pathname : '',
+      website: honeypot,
+      elapsedMs: Date.now() - mountedAt.current,
     };
     const ok = await submitQuote(payload);
     setStatus(ok ? 'success' : 'error');

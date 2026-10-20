@@ -36,11 +36,11 @@ jobs:
         run: npm run build
         env:
           VITE_SITE_URL: ${{ vars.VITE_SITE_URL || 'https://premiumdoorservices.com' }}
-          VITE_FORM_ENDPOINT: ${{ vars.VITE_FORM_ENDPOINT }}
+          VITE_FORM_ENDPOINT: ${{ vars.VITE_FORM_ENDPOINT || '/api/quote.php' }}
 
       - name: Check build output
         run: |
-          for f in index.html 404.html sitemap.xml robots.txt about.html about/index.html; do
+          for f in index.html 404.html sitemap.xml robots.txt about.html about/index.html services/commercial/index.html api/quote.php; do
             test -f "dist/$f" || { echo "::error::dist/$f is missing"; exit 1; }
           done
           ls dist/assets/*.js dist/assets/*.css > /dev/null

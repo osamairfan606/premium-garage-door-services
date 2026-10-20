@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Legal from './Legal';
 import { site } from '../config/site';
 import { locationList } from '../config/locations';
+import { firstTimeOffer } from '../config/content';
 
 export default function Terms() {
   return (
@@ -21,6 +22,16 @@ export default function Terms() {
         {
           title: 'Estimates and appointments',
           body: <p>Submitting a request through this website does not create a confirmed appointment or a binding contract. Our team will contact you to confirm details. Onsite estimates are free; any work is carried out only after you approve the recommended service and price.</p>,
+        },
+        {
+          id: 'first-time-discount',
+          title: 'First-time customer discount',
+          body: (
+            <>
+              <p>{firstTimeOffer.body}</p>
+              <ul>{firstTimeOffer.terms.map(t => <li key={t}>{t}</li>)}</ul>
+            </>
+          ),
         },
         {
           title: 'Same-day and emergency service',

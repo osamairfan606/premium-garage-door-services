@@ -46,6 +46,8 @@ These items are deliberately left empty or configurable. The original site did n
 
 ## Connecting the forms
 
+On GoDaddy the form posts to the site's own `/api/quote.php`, which emails each request through WordPress. See [docs/forms-email.md](docs/forms-email.md). For other hosts:
+
 The quote form validates input and includes spam protection (a honeypot field and a minimum time on the page). It sends a JSON `POST` to the URL in `VITE_FORM_ENDPOINT`:
 
 ```bash

@@ -104,9 +104,10 @@ jobs:
         run: |
           code() { curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$1"; }
           fail=0
-          for p in /about/ /services/ /contact/ /locations/chicago/ /locations/indianapolis/ /sitemap.xml; do
+          for p in /about/ /services/ /services/commercial/ /contact/ /locations/chicago/ /locations/indianapolis/ /sitemap.xml; do
             c=$(code "$SITE_URL$p"); echo "$c $p"; [ "$c" = "200" ] || fail=1
           done
+          c=$(code "$SITE_URL/api/quote.php"); echo "$c /api/quote.php (expect 405 = PHP runs)"; [ "$c" = "405" ] || fail=1
           c=$(code "$SITE_URL/wp-admin/"); echo "$c /wp-admin/ (expect 302 to login)"; [ "$c" = "302" ] || fail=1
           if [ "$HOME_ENABLED" != "true" ]; then
             curl -s --max-time 30 "$SITE_URL/" | grep -q 'content="WordPress' \

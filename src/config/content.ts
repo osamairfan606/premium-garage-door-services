@@ -70,6 +70,66 @@ export const residentialCopy = {
   ] as FaqItem[],
 };
 
+/** Single commercial page (/services/commercial) with a section for each city. */
+export const commercialCopy = {
+  intro: [
+    'When an overhead door fails, deliveries wait, equipment is stuck and premises may not be secure. Business owners and property managers need a team that responds, communicates clearly and fixes the problem properly.',
+    'We repair springs, cables, rollers, tracks and openers, provide planned maintenance and install replacement doors. Commercial systems vary widely, so we start by understanding your door — type, size and how often it cycles — and confirm it’s a fit before scheduling.',
+  ],
+  services: [
+    { title: 'Spring & cable repair', body: 'Worn or broken springs and frayed cables replaced so the door lifts safely and evenly.' },
+    { title: 'Opener service', body: 'Diagnosis, repair and replacement of commercial door openers, remotes and wall controls.' },
+    { title: 'Rollers & tracks', body: 'Noisy, jerking or off-track doors realigned, with worn rollers and hardware replaced.' },
+    { title: 'Planned maintenance', body: 'Lubrication, hardware tightening, balance testing and safety checks to reduce downtime.' },
+    { title: 'Door replacement', body: 'New doors when repair no longer makes sense, with a free onsite estimate first.' },
+    { title: 'Emergency help', body: 'A door stuck open or shut at the end of the day? Call your local line 24/7.' },
+  ],
+  cities: {
+    chicago: {
+      image: 'com-brick-warehouse' as ImageName,
+      imageAlt: 'Brick commercial building with a metal overhead door',
+      lead: 'Repairs, opener service, maintenance and door replacement for Chicago storefronts, workshops and facilities — planned around your operating hours.',
+      points: [
+        'High-cycle doors checked for worn springs, rollers and cables before they fail',
+        'Doors that seal and lock properly against Chicago weather',
+        'Visits scheduled to keep your operation moving',
+      ],
+    },
+    indianapolis: {
+      image: 'com-loading-dock' as ImageName,
+      imageAlt: 'Loading dock bays with commercial overhead doors',
+      lead: 'Reliable overhead door repair, opener service, maintenance and replacement for Indianapolis shops, warehouses and service businesses.',
+      points: [
+        'Scheduled maintenance to keep docks and bays moving',
+        'Safety inspection of balance, hardware and sensors on every visit',
+        'Clear, upfront estimates before any work begins',
+      ],
+    },
+  },
+  faqs: [
+    { q: 'What commercial door services do you offer?', a: 'We repair springs, cables, rollers, tracks and openers, and provide maintenance, installation and replacement. Commercial door systems vary, so please call your local line with your door details and we will confirm we can help.' },
+    { q: 'Can you work around our business hours?', a: 'Tell us your preferred time when requesting service — we’ll do our best to schedule visits that minimise disruption.' },
+    { q: 'Do you offer free estimates for commercial properties?', a: 'Yes. We provide free onsite estimates for commercial repairs, installations and replacements.' },
+    { q: 'Do you offer maintenance for multiple doors?', a: 'Yes — maintenance covers lubrication, hardware tightening, balance testing and safety inspection. Let us know how many doors you have when you request service.' },
+  ] as FaqItem[],
+};
+
+/**
+ * First-time customer discount shown on the home page and in the Terms page.
+ * Confirm the wording with the business owner before launch.
+ */
+export const firstTimeOffer = {
+  headline: '10–15% off for first-time customers',
+  body: 'Booking with us for the first time? Mention it when you request your free estimate and your technician will apply a 10–15% discount to your estimate.',
+  terms: [
+    'Available to first-time customers of Premium Garage Door only, one discount per household or business.',
+    'The discount (between 10% and 15%) is confirmed by the technician and shown on the written estimate during the onsite visit.',
+    'Must be mentioned when booking or before the estimate is approved; it cannot be applied to work already completed or invoiced.',
+    'Cannot be combined with other discounts or promotions. Not redeemable for cash.',
+    'Premium Garage Door may change or end this offer at any time.',
+  ],
+};
+
 /**
  * Gallery imagery. `source: 'stock'` images are licensed stock photography
  * (Pexels License) used for illustration — replace with real project photos
@@ -158,5 +218,5 @@ export const timeSlots = [
 export const issueTypes = [
   'Broken Spring', 'Door Off Track', 'Opener Not Working', 'Remote or Keypad Issue', 'Cable Broken or Loose',
   'Roller Noise or Damage', 'Door Won’t Open/Close', 'Panel Damage', 'Sensor Misalignment',
-  'Routine Maintenance / Tune-Up', 'New Door Installation', 'General Inquiry', 'Other',
+  'Routine Maintenance / Tune-Up', 'New Door Installation', 'Commercial Door Service', 'General Inquiry', 'Other',
 ];

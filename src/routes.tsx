@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import ServicesPage from './pages/Services';
 import ResidentialPage from './pages/ResidentialPage';
+import CommercialPage from './pages/CommercialPage';
 import LocationPage from './pages/LocationPage';
 import ServiceDetail from './pages/ServiceDetail';
 import Faqs from './pages/Faqs';
@@ -24,6 +25,7 @@ export const appRoutes: AppRoute[] = [
   { path: '/about', element: <About />, priority: 0.6 },
   { path: '/services', element: <ServicesPage />, priority: 0.9 },
   { path: '/services/residential', element: <ResidentialPage />, priority: 0.9 },
+  { path: '/services/commercial', element: <CommercialPage />, priority: 0.85 },
   ...services.map(s => ({ path: `/services/${s.slug}`, element: <ServiceDetail slug={s.slug} />, priority: 0.8 })),
   ...locationList.flatMap(l => [
     { path: `/locations/${l.id}`, element: <LocationPage locationId={l.id} />, priority: 0.95 },
