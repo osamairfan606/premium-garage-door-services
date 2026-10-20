@@ -100,6 +100,25 @@ jobs:
           [ "$HOME_ENABLED" = "true" ] || sed -i '/^index\.html$/d' manifest.txt
           rsync -c manifest.txt "target:$REMOTE_DIR/$MANIFEST"
 
+      - name: Get cutover files
+        if: env.HOME_ENABLED == 'true'
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: deploy/mu-plugin
+          path: repo
+
+      # Cutover: a must-use plugin serves the static pages (incl. "/") from PHP, so it does not depend on the
+      # host's limited .htaccess support. Rollback = delete wp-content/mu-plugins/premium-static-site.php.
+      - name: Install front-end router (cutover only)
+        if: env.HOME_ENABLED == 'true'
+        run: |
+          DEST="$REMOTE_DIR/wp-content/mu-plugins/premium-static-site.php"
+          ssh target "test -d '$REMOTE_DIR/wp-content/mu-plugins'" || { echo "::error::mu-plugins folder not found"; exit 1; }
+          ssh target "test ! -e '$DEST' || grep -q 'Premium static site router' '$DEST'" \
+            || { echo "::error::$DEST exists and is not ours; refusing to overwrite"; exit 1; }
+          rsync -c repo/deploy/mu-plugin/premium-static-site.php "target:$DEST"
+          ssh target "cd '$REMOTE_DIR' && wp cache flush" || echo "::warning::wp cache flush failed; flush the GoDaddy cache from the dashboard"
+
       - name: Smoke test
         run: |
           code() { curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$1"; }
@@ -113,6 +132,13 @@ jobs:
             curl -s --max-time 30 "$SITE_URL/" | grep -q 'content="WordPress' \
               && echo "Home page is still WordPress (expected before cutover)" \
               || { echo "::error::Home page no longer looks like WordPress"; fail=1; }
+          else
+            curl -s --max-time 30 "$SITE_URL/?cb=$(date +%s)" | grep -q 'first-time-offer' \
+              && echo "Home page is the new site" \
+              || { echo "::error::Home page is not the new site (check the cache)"; fail=1; }
+            for p in /about /services/commercial /locations/chicago; do
+              c=$(code "$SITE_URL$p"); echo "$c $p"; [ "$c" = "200" ] || fail=1
+            done
           fi
           exit $fail
 

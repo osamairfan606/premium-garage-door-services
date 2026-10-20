@@ -8,17 +8,19 @@ The site is hosted on the client's existing **GoDaddy Managed WordPress Deluxe**
   - Normal SFTP users need both a key and a password, so they are not used here.
   - The host in GoDaddy's copy-paste snippet (`7bk.cbf.myftpupload.com`) did not answer on port 22.
 - **Web root:** `/html` is the WordPress install. WordPress core files are owned by `root`, so a deploy cannot change them.
-- **The server is not Apache.** GoDaddy translates `.htaccess`, and `/html/.htaccess.log` shows it skips `RewriteCond -f/-d`. The rules in `deploy/htaccess-cutover.txt` must be tested on this platform before cutover.
+- **The server is not Apache.** GoDaddy translates `.htaccess`, and `/html/.htaccess.log` shows it skips `RewriteCond -f/-d`. Cutover therefore does not rely on `.htaccess`. It uses a small must-use plugin instead (see below).
 - **GoDaddy's official workflow is not used.** It uploads the repository source instead of `dist/`, and its default cleanup deletes server files that are not in the repository. Its ignore list does not cover `wp-config.php`, themes or plugins.
 
 ## How it works
 
 - `npm run build` produces `dist/`. None of its files share a name with WordPress files (`index.php`, `wp-*`, `.htaccess`, `xmlrpc.php`).
 - **Before cutover:** the static pages already work at their own URLs, for example `/about/` and `/services/`. On production, the home page (`/index.html`) is held back, so the live home page stays WordPress.
-- **Cutover:**
-  1. Upload the home page by setting `GODADDY_HOME_ENABLED=true`.
-  2. Paste the rules from [`deploy/htaccess-cutover.txt`](../deploy/htaccess-cutover.txt) at the top of `/html/.htaccess`.
-- **Rollback:** delete that rules block from `.htaccess`, and the WordPress home page returns immediately. `/wp-admin` keeps working the whole time.
+- **Cutover:** set `GODADDY_HOME_ENABLED=true` and run the workflow. It does three things:
+  1. uploads `/index.html`;
+  2. installs [`deploy/mu-plugin/premium-static-site.php`](../deploy/mu-plugin/premium-static-site.php) as `/html/wp-content/mu-plugins/premium-static-site.php`;
+  3. flushes the cache.
+  The plugin serves the static pages for `/`, `/about`, `/about/` and so on from PHP, so it works without `.htaccess` rewrites. Unknown URLs get the static 404 page. Admin, login, the REST API, cron, `wp-content` and `/api/quote.php` are left to WordPress. Nothing in the database changes.
+- **Rollback:** delete `/html/wp-content/mu-plugins/premium-static-site.php`, then flush the cache. WordPress serves the front end again immediately. `/wp-admin` keeps working the whole time.
 
 > GoDaddy's own CI/CD action (`godaddy-wordpress/gd-wordpress-deployer`) is **not** used. It is built for deploying WordPress code, runs WordPress health checks, and by default deletes server files that are not in the repository (`cleanup_deleted_files: yes`). Pointed at `/html`, it would remove WordPress.
 
@@ -111,7 +113,7 @@ Add these under Secrets and variables → Actions → Variables:
    - assets, images and the mobile layout;
    - phone links for both cities and the quote form;
    - `/wp-admin` login.
-4. On staging only, apply the cutover rules to staging's `.htaccess`. Then test the home page, clean URLs, the 404 page, `/wp-admin`, and flushing GoDaddy's cache (dashboard → Flush cache).
+4. On staging only, set `GODADDY_HOME_ENABLED=true` and run the staging deploy. Then test the home page, clean URLs, the 404 page, `/wp-admin`, and flushing GoDaddy's cache.
 
 ## Stage 5: Production, without touching the home page
 
@@ -123,17 +125,15 @@ Add these under Secrets and variables → Actions → Variables:
 
 ## Stage 6: Cutover (only with explicit approval)
 
-1. Set `GODADDY_HOME_ENABLED=true` and re-run the workflow, approving staging and then production. This uploads `/index.html`.
-2. With SFTP, download `/html/.htaccess` and keep a copy named `htaccess-before-cutover`.
-3. Paste the block from `deploy/htaccess-cutover.txt` above `# BEGIN WordPress` and upload the file.
-4. Flush GoDaddy's cache in the dashboard, then test the home page, all routes, the 404 page and `/wp-admin`.
-5. Submit `https://premiumdoorservices.com/sitemap.xml` in Google Search Console.
+1. Set the repository variable `GODADDY_HOME_ENABLED=true`, run the workflow and approve it. This uploads `/index.html`, installs the router plugin and flushes the cache. The smoke test then checks that `/` is the new site.
+2. If the old home page still shows, flush GoDaddy's cache in the dashboard. Then test the home page, all routes, the 404 page and `/wp-admin`.
+3. Submit `https://premiumdoorservices.com/sitemap.xml` in Google Search Console.
 
 ## Rollback
 
 | Situation | What to do |
 |---|---|
-| Home page or routing is wrong after cutover | Upload `htaccess-before-cutover` as `/html/.htaccess` (or delete the Premium block), then flush the cache. The WordPress home page is back. |
+| Home page or routing is wrong after cutover | Delete `/html/wp-content/mu-plugins/premium-static-site.php` (SFTP or the WP File Manager plugin), then flush the cache. The WordPress front end is back. Also set `GODADDY_HOME_ENABLED` to `false`, so the next deploy does not reinstall the plugin. |
 | Anything worse | Dashboard → Backups → restore the manual backup from stage 6. It restores files and database. |
 | Stop automatic deploys | Set `GODADDY_DEPLOY_ENABLED` to anything other than `true`. |
 
