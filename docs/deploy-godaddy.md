@@ -19,7 +19,7 @@ The site is hosted on the client's existing **GoDaddy Managed WordPress Deluxe**
   1. uploads `/index.html`;
   2. installs [`deploy/mu-plugin/premium-static-site.php`](../deploy/mu-plugin/premium-static-site.php) as `/html/wp-content/mu-plugins/premium-static-site.php`;
   3. flushes the cache.
-  The plugin serves the static pages for `/`, `/about`, `/about/` and so on from PHP, so it works without `.htaccess` rewrites. Unknown URLs get the static 404 page. Admin, login, the REST API, cron, `wp-content` and `/api/quote.php` are left to WordPress. Nothing in the database changes.
+  The plugin serves the home page (and any static page the server does not serve itself) from PHP, so it works without `.htaccess` rewrites. Unknown URLs get the static 404 page. Admin, login, the REST API, cron, `wp-content` and `/api/quote.php` are left to WordPress. Nothing in the database changes.
 - **Rollback:** delete `/html/wp-content/mu-plugins/premium-static-site.php`, then flush the cache. WordPress serves the front end again immediately. `/wp-admin` keeps working the whole time.
 
 > GoDaddy's own CI/CD action (`godaddy-wordpress/gd-wordpress-deployer`) is **not** used. It is built for deploying WordPress code, runs WordPress health checks, and by default deletes server files that are not in the repository (`cleanup_deleted_files: yes`). Pointed at `/html`, it would remove WordPress.

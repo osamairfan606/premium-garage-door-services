@@ -56,12 +56,8 @@ function premium_static_serve(string $file, int $status): void {
         premium_static_serve($file, 200);
     }
 
-    // /about/ -> /about (canonical URLs have no trailing slash)
-    if (substr($path, -1) === '/' && is_file("$root/$slug.html")) {
-        header('Location: /' . $slug . (empty($_SERVER['QUERY_STRING']) ? '' : '?' . $_SERVER['QUERY_STRING']), true, 301);
-        exit;
-    }
-
+    // No trailing-slash redirects here: GoDaddy's server already 301s /about to /about/ and serves the folder's
+    // index.html itself, so redirecting the other way would loop.
     foreach (["$root/$slug.html", "$root/$slug/index.html"] as $file) {
         if (is_file($file)) {
             premium_static_serve($file, 200);
