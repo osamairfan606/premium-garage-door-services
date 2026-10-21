@@ -136,9 +136,20 @@ jobs:
             curl -s --max-time 30 "$SITE_URL/?cb=$(date +%s)" | grep -q 'first-time-offer' \
               && echo "Home page is the new site" \
               || { echo "::error::Home page is not the new site (check the cache)"; fail=1; }
+            # URLs without a trailing slash: GoDaddy answers 200 directly or 301s to the slash version.
+            # Accept only that canonical redirect, and require the final page to return 200.
             for p in /about /services/commercial /locations/chicago; do
-              c=$(code "$SITE_URL$p"); echo "$c $p"; [ "$c" = "200" ] || fail=1
+              first=$(code "$SITE_URL$p")
+              read -r final url < <(curl -s -o /dev/null -L --max-redirs 3 -w '%{http_code} %{url_effective}' --max-time 30 "$SITE_URL$p")
+              echo "$first $p -> $final $url"
+              case "$first" in
+                200) ;;
+                301|308) [ "$url" = "$SITE_URL$p/" ] || { echo "::error::$p redirects to unexpected $url"; fail=1; } ;;
+                *) fail=1 ;;
+              esac
+              [ "$final" = "200" ] || fail=1
             done
+            c=$(code "$SITE_URL/no-such-page-$(date +%s)"); echo "$c unknown page (expect 404)"; [ "$c" = "404" ] || fail=1
           fi
           exit $fail
 
