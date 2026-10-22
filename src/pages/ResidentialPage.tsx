@@ -42,7 +42,7 @@ export default function ResidentialPage({ locationId }: { locationId?: LocationI
   return (
     <>
       <Seo
-        title={loc ? `${loc.city} Residential Garage Door Repair | ${loc.phoneDisplay}` : 'Residential Garage Door Services | Repair, Openers & Installation'}
+        title={loc ? `Residential Garage Door Repair ${loc.city} | ${loc.phoneDisplay}` : 'Residential Garage Door Repair & Installation'}
         description={
           loc
             ? `Residential garage door repair, spring replacement, opener service and installation in ${loc.label}. Free onsite estimates. Call ${loc.phoneDisplay}.`

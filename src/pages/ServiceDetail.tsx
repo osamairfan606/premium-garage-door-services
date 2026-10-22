@@ -41,7 +41,7 @@ export default function ServiceDetail({ slug }: { slug: string }) {
   return (
     <>
       <Seo
-        title={`${s.name} in Chicago & Indianapolis`}
+        title={s.seoTitle}
         description={s.metaDescription}
         path={path}
         jsonLd={[

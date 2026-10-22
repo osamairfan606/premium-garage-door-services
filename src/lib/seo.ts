@@ -2,7 +2,10 @@ import { site } from '../config/site';
 import type { Location } from '../config/locations';
 import type { FaqItem } from '../config/locations';
 
-export const absoluteUrl = (path: string) => `${site.url}${path === '/' ? '/' : path}`;
+/** GoDaddy serves every page as a folder (/about/), so canonical URLs end with a slash. */
+export const canonicalPath = (path: string) => (path === '/' || path.endsWith('/') || /\.[a-z0-9]+$/i.test(path) ? path : `${path}/`);
+
+export const absoluteUrl = (path: string) => `${site.url}${canonicalPath(path)}`;
 
 export function organizationSchema() {
   return {
@@ -10,6 +13,7 @@ export function organizationSchema() {
     '@type': 'Organization',
     '@id': `${site.url}/#organization`,
     name: site.name,
+    alternateName: site.alternateNames,
     legalName: site.legalName,
     url: site.url + '/',
     logo: `${site.url}/images/logo-480.png`,
@@ -18,6 +22,19 @@ export function organizationSchema() {
       { '@type': 'ContactPoint', telephone: '+1-463-262-2862', contactType: 'customer service', areaServed: 'Indianapolis, IN', availableLanguage: 'English' },
     ],
     ...(site.social.length ? { sameAs: site.social.map(s => s.href) } : {}),
+  };
+}
+
+/** WebSite entity for the home page; helps Google show the brand name for searches like "premium garage door services". */
+export function websiteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${site.url}/#website`,
+    name: site.brandName,
+    alternateName: site.alternateNames,
+    url: site.url + '/',
+    publisher: { '@id': `${site.url}/#organization` },
   };
 }
 

@@ -23,8 +23,8 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
   return (
     <>
       <Seo
-        title={`Garage Door Repair ${loc.city}, ${loc.stateCode} | 24/7 Service — ${loc.phoneDisplay}`}
-        description={`Garage door repair, spring replacement, opener service and installation for homeowners in ${loc.label}. Same-day service whenever possible. Call ${loc.phoneDisplay}.`}
+        title={`Garage Door Repair ${loc.city}, ${loc.stateCode} | 24/7 · ${loc.phoneDisplay}`}
+        description={`Garage door repair, spring replacement, openers and installation in ${loc.label}. Same-day service whenever possible. Call ${loc.phoneDisplay}.`}
         path={path}
         jsonLd={[breadcrumbSchema(crumbs), locationSchema(loc), faqSchema(loc.faqs)]}
       />

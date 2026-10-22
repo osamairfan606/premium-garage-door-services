@@ -9,10 +9,14 @@ interface SeoProps {
   image?: string;
   jsonLd?: object[];
   noindex?: boolean;
+  /** og:type, e.g. "article" for blog posts */
+  type?: 'website' | 'article';
 }
 
-export default function Seo({ title, description, path, image = '/og-image.jpg', jsonLd = [], noindex }: SeoProps) {
-  const fullTitle = title.includes(site.name) || title.length > 52 ? title : `${title} | ${site.name}`;
+export default function Seo({ title, description, path, image = '/og-image.jpg', jsonLd = [], noindex, type = 'website' }: SeoProps) {
+  // Add the brand only while the whole title stays within ~60 characters (Google truncates longer titles).
+  const suffix = ` | ${site.name}`;
+  const fullTitle = title.includes(site.name) || title.length + suffix.length > 60 ? title : `${title}${suffix}`;
   const url = absoluteUrl(path);
   const img = image.startsWith('http') ? image : `${site.url}${image}`;
   return (
@@ -22,7 +26,7 @@ export default function Seo({ title, description, path, image = '/og-image.jpg',
       <meta name="description" content={description} />
       <link rel="canonical" href={url} />
       {noindex && <meta name="robots" content="noindex, follow" />}
-      <meta property="og:type" content="website" />
+      <meta property="og:type" content={type} />
       <meta property="og:site_name" content={site.name} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={description} />

@@ -106,3 +106,22 @@
   .text-balance { text-wrap: balance; }
   .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
 }
+
+/* Blog article body (Markdown output). */
+@layer components {
+  .article-body { @apply text-[17px] leading-[1.8] text-stone-700; }
+  .article-body > * + * { @apply mt-5; }
+  .article-body h2 { @apply mt-12 font-display text-[1.75rem] font-semibold leading-tight text-ink-900; }
+  .article-body h3 { @apply mt-9 text-xl font-semibold text-ink-900; }
+  .article-body a { @apply font-semibold text-gold-600 underline decoration-gold-300 underline-offset-2 hover:text-ink-900; }
+  .article-body ul { @apply list-disc space-y-2 pl-6; }
+  .article-body ol { @apply list-decimal space-y-2 pl-6; }
+  .article-body li::marker { @apply text-gold-500; }
+  .article-body strong { @apply font-semibold text-ink-900; }
+  .article-body blockquote { @apply border-l-4 border-gold-400 bg-gold-50 px-5 py-4 text-ink-800; }
+  .article-body img { @apply rounded-lg; }
+  .article-body table { @apply w-full border-collapse text-[15px]; }
+  .article-body th, .article-body td { @apply border border-stone-200 px-3 py-2 text-left align-top; }
+  .article-body th { @apply bg-stone-100 font-semibold text-ink-900; }
+  .article-body hr { @apply my-10 border-stone-200; }
+}

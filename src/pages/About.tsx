@@ -25,8 +25,8 @@ export default function About() {
   return (
     <>
       <Seo
-        title="About Us | Local Garage Door Experts"
-        description="Premium Garage Door provides dependable garage door repair, installation and maintenance with quality workmanship, honest pricing and a 100% satisfaction guarantee."
+        title="About Premium Garage Door Services"
+        description="Premium Garage Door Services: dependable garage door repair, installation and maintenance in Chicago and Indianapolis, with honest, upfront pricing."
         path="/about"
         jsonLd={[breadcrumbSchema(crumbs)]}
       />

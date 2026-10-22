@@ -23,7 +23,7 @@ export default function CommercialPage() {
   return (
     <>
       <Seo
-        title="Commercial Garage Door Services | Chicago & Indianapolis"
+        title="Commercial Garage Door Repair | Chicago & Indianapolis"
         description="Commercial garage door repair, opener service, maintenance and door replacement for businesses in Chicago, IL and Indianapolis, IN. Free onsite estimates."
         path={path}
         jsonLd={[breadcrumbSchema(crumbs), faqSchema(commercialCopy.faqs)]}

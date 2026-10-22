@@ -111,6 +111,7 @@ export default function MobileMenu({ open, onClose, location }: { open: boolean;
                     </div>
                   ))}
                 </Group>,
+                <NavLink key="blog" to={primaryNav.blog.to} className={linkCls} onClick={onClose}>{primaryNav.blog.label}</NavLink>,
                 <NavLink key="faqs" to={primaryNav.faqs.to} className={linkCls} onClick={onClose}>{primaryNav.faqs.label}</NavLink>,
                 <NavLink key="contact" to={primaryNav.contact.to} className={linkCls} onClick={onClose}>{primaryNav.contact.label}</NavLink>,
               ].map((el, i) => (

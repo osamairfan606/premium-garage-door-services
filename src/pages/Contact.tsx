@@ -13,7 +13,7 @@ export default function Contact() {
   return (
     <>
       <Seo
-        title="Contact Us & Request a Free Estimate"
+        title="Contact Us | Free Garage Door Estimate"
         description="Request a free onsite garage door estimate or call 24/7: Chicago (312) 626-5158, Indianapolis (463) 262-2862."
         path="/contact"
         jsonLd={[breadcrumbSchema(crumbs)]}

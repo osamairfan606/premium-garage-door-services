@@ -36,7 +36,7 @@ const errors = [];
   await page.waitForTimeout(800);
   const headerTel = await page.locator('header a[href^="tel:"]').evaluateAll(as => [...new Set(as.map(a => a.getAttribute('href')))]);
   check('Header shows only Chicago number after navigation', headerTel.length === 1 && headerTel[0] === 'tel:+13126265158', headerTel.join(','));
-  check('Page title updated on navigation', (await page.title()).includes('Chicago Residential'));
+  check('Page title updated on navigation', (await page.title()).includes('Residential Garage Door Repair Chicago'));
 
   // Call chooser on a general page
   await page.goto(BASE + '/services', { waitUntil: 'networkidle' });

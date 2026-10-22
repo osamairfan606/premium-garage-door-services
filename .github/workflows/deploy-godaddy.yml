@@ -100,6 +100,20 @@ jobs:
           [ "$HOME_ENABLED" = "true" ] || sed -i '/^index\.html$/d' manifest.txt
           rsync -c manifest.txt "target:$REMOTE_DIR/$MANIFEST"
 
+      # GoDaddy's CDN caches static HTML for ~31 days; purge it so new pages and blog posts show immediately.
+      - name: Flush GoDaddy cache
+        run: |
+          # The "wp wpaas" CLI is not registered for the deploy user, so call GoDaddy's system plugin directly
+          # (the same Varnish ban + CDN invalidation as "Flush cache" in the dashboard).
+          ssh target "cd '$REMOTE_DIR' && wp eval-file -" <<'PHP' || echo "::warning::Cache flush failed; use Flush cache in the GoDaddy dashboard"
+          <?php
+          $c = $GLOBALS['wpaas_cache_class'] ?? null;
+          if (!$c) { echo 'GoDaddy cache class not available', PHP_EOL; return; }
+          if (method_exists($c, 'ban')) { $c->ban(); echo 'Varnish ban sent', PHP_EOL; }
+          $id = method_exists($c, 'flush_cdn') ? $c->flush_cdn() : null;
+          echo $id ? "CDN invalidation requested: $id" : 'CDN invalidation not started', PHP_EOL;
+          PHP
+
       - name: Get cutover files
         if: env.HOME_ENABLED == 'true'
         uses: actions/checkout@v4
@@ -117,13 +131,12 @@ jobs:
           ssh target "test ! -e '$DEST' || grep -q 'Premium static site router' '$DEST'" \
             || { echo "::error::$DEST exists and is not ours; refusing to overwrite"; exit 1; }
           rsync -c repo/deploy/mu-plugin/premium-static-site.php "target:$DEST"
-          ssh target "cd '$REMOTE_DIR' && wp cache flush" || echo "::warning::wp cache flush failed; flush the GoDaddy cache from the dashboard"
 
       - name: Smoke test
         run: |
           code() { curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$1"; }
           fail=0
-          for p in /about/ /services/ /services/commercial/ /contact/ /locations/chicago/ /locations/indianapolis/ /sitemap.xml; do
+          for p in /about/ /services/ /services/commercial/ /blog/ /contact/ /locations/chicago/ /locations/indianapolis/ /sitemap.xml; do
             c=$(code "$SITE_URL$p"); echo "$c $p"; [ "$c" = "200" ] || fail=1
           done
           c=$(code "$SITE_URL/api/quote.php"); echo "$c /api/quote.php (expect 405 = PHP runs)"; [ "$c" = "405" ] || fail=1

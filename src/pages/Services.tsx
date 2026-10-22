@@ -15,8 +15,8 @@ export default function ServicesPage() {
   return (
     <>
       <Seo
-        title="Garage Door Services | Repair, Springs, Openers & Installation"
-        description="Explore our garage door services: repair, broken spring replacement, opener installation, off-track, cable, roller and panel repair, maintenance and new door installation."
+        title="Garage Door Services | Repair, Springs & Openers"
+        description="Garage door repair, spring replacement, opener installation, off-track, cable, roller and panel repair, maintenance and new doors in Chicago and Indianapolis."
         path="/services"
         jsonLd={[breadcrumbSchema(crumbs)]}
       />

@@ -17,7 +17,7 @@ import FinalCta from '../components/sections/FinalCta';
 import OfferBanner, { OFFER_TERMS_PATH } from '../components/sections/OfferBanner';
 import { locationList } from '../config/locations';
 import { firstTimeOffer, generalFaqs } from '../config/content';
-import { faqSchema } from '../lib/seo';
+import { faqSchema, websiteSchema } from '../lib/seo';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const item = { hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0, transition: { duration: 0.9, ease: EASE } } };
@@ -104,10 +104,10 @@ export default function Home() {
   return (
     <>
       <Seo
-        title="Premium Garage Door | Garage Door Repair & Installation in Chicago & Indianapolis"
-        description="Same-day residential garage door repair, spring replacement, opener service and new door installation in Chicago, IL and Indianapolis, IN. 24/7 emergency service and free onsite estimates."
+        title="Premium Garage Door Services | Chicago & Indianapolis"
+        description="Premium Garage Door Services: 24/7 garage door repair, spring replacement, openers and new doors in Chicago, IL and Indianapolis, IN. Free onsite estimates."
         path="/"
-        jsonLd={[faqSchema(generalFaqs.slice(0, 6))]}
+        jsonLd={[websiteSchema(), faqSchema(generalFaqs.slice(0, 6))]}
       />
       <HomeHero />
       <TrustStrip />

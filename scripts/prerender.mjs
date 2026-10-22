@@ -9,9 +9,15 @@ const DIST = path.join(ROOT, 'dist');
 const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
 const { render, allRoutePaths, site } = await import(pathToFileURL(path.join(ROOT, 'dist-ssr', 'entry-server.js')).href);
 
+// GoDaddy serves each page as a folder and 301s /about to /about/, so internal links in the static HTML
+// point straight at the trailing-slash URL (no redirect hop for visitors or crawlers).
+const routeSet = new Set(allRoutePaths.map(r => r.path));
+const withSlash = html =>
+  html.replace(/href="(\/[^"#?]*?)([#?][^"]*)?"/g, (m, p, rest = '') => (p !== '/' && !p.endsWith('/') && routeSet.has(p) ? `href="${p}/${rest}"` : m));
+
 function page(url) {
   const { html, head } = render(url);
-  return template.replace('<!--app-head-->', head).replace('<!--app-html-->', html);
+  return withSlash(template.replace('<!--app-head-->', head).replace('<!--app-html-->', html));
 }
 
 for (const { path: route } of allRoutePaths) {
@@ -29,7 +35,7 @@ const today = new Date().toISOString().slice(0, 10);
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allRoutePaths
-  .map(r => `  <url><loc>${site.url}${r.path === '/' ? '/' : r.path}</loc><lastmod>${today}</lastmod><priority>${r.priority.toFixed(1)}</priority></url>`)
+  .map(r => `  <url><loc>${site.url}${r.path === '/' ? '/' : `${r.path}/`}</loc><lastmod>${r.lastmod ?? today}</lastmod><priority>${r.priority.toFixed(1)}</priority></url>`)
   .join('\n')}
 </urlset>
 `;

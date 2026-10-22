@@ -6,6 +6,10 @@ export const site = {
   name: 'Premium Garage Door',
   /** Legal name as printed in the original site's footer. Confirm exact capitalisation with the owner. */
   legalName: 'Premium Garage Door Service LLC',
+  /** Brand name used in search titles and WebSite schema. */
+  brandName: 'Premium Garage Door Services',
+  /** Other names customers search for; used as schema alternateName. */
+  alternateNames: ['Premium Garage Door Services', 'Premium Garage Door Service', 'Premium Door Services', 'Premium Garage Door Service LLC'],
   tagline: 'Garage Door Repair | Installation | Service',
   /**
    * Production origin used for canonical URLs, Open Graph tags and the sitemap.

@@ -13,6 +13,12 @@ npm run preview    # serve /dist exactly like a static host (http://localhost:41
 
 Requires Node 18+.
 
+## Blog and SEO
+
+- **Blog posts:** add a Markdown file to `content/blog/`. See [docs/blog-guide.md](docs/blog-guide.md).
+- **SEO plan, keywords and the daily routine:** [docs/seo-playbook.md](docs/seo-playbook.md).
+- **On-page check:** run `npm run build && npm run seo:audit`.
+
 ## Where to change things
 
 | What | File |

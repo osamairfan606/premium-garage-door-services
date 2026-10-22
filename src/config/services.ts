@@ -14,7 +14,8 @@ export interface Service {
   imageAlt: string;
   /** Card summary — short, benefit-led. */
   summary: string;
-  /** Detail page */
+  /** Detail page: search title (keep under 60 characters) */
+  seoTitle: string;
   metaDescription: string;
   headline: string;
   intro: string[];
@@ -28,6 +29,7 @@ export interface Service {
 export const services: Service[] = [
   {
     slug: 'garage-door-repair',
+    seoTitle: 'Garage Door Repair Chicago & Indianapolis | 24/7',
     name: 'Garage Door Repair',
     short: 'Door Repair',
     icon: 'wrench',
@@ -50,6 +52,7 @@ export const services: Service[] = [
   },
   {
     slug: 'broken-spring-repair',
+    seoTitle: 'Garage Door Spring Repair | Chicago & Indianapolis',
     name: 'Broken Spring Repair',
     short: 'Spring Repair',
     icon: 'spring',
@@ -72,6 +75,7 @@ export const services: Service[] = [
   },
   {
     slug: 'garage-door-opener-repair-installation',
+    seoTitle: 'Garage Door Opener Repair & Installation | Chicago & Indy',
     name: 'Opener Installation & Repair',
     short: 'Openers',
     icon: 'opener',
@@ -94,6 +98,7 @@ export const services: Service[] = [
   },
   {
     slug: 'garage-door-installation',
+    seoTitle: 'New Garage Door Installation | Chicago & Indianapolis',
     name: 'Garage Door Installation & Replacement',
     short: 'Installation',
     icon: 'door',
@@ -116,6 +121,7 @@ export const services: Service[] = [
   },
   {
     slug: 'off-track-repair',
+    seoTitle: 'Garage Door Off Track Repair | Chicago & Indianapolis',
     name: 'Door Off Track Repair',
     short: 'Off Track',
     icon: 'track',
@@ -137,6 +143,7 @@ export const services: Service[] = [
   },
   {
     slug: 'cable-repair',
+    seoTitle: 'Garage Door Cable Repair | Chicago & Indianapolis',
     name: 'Cable Repair',
     short: 'Cables',
     icon: 'cable',
@@ -158,6 +165,7 @@ export const services: Service[] = [
   },
   {
     slug: 'roller-repair',
+    seoTitle: 'Garage Door Roller Repair | Chicago & Indianapolis',
     name: 'Roller Repair',
     short: 'Rollers',
     icon: 'roller',
@@ -179,6 +187,7 @@ export const services: Service[] = [
   },
   {
     slug: 'panel-repair',
+    seoTitle: 'Garage Door Panel Repair | Chicago & Indianapolis',
     name: 'Panel Repair',
     short: 'Panels',
     icon: 'panel',
@@ -200,6 +209,7 @@ export const services: Service[] = [
   },
   {
     slug: 'maintenance-tune-up',
+    seoTitle: 'Garage Door Maintenance & Tune-Up | Chicago & Indy',
     name: 'Maintenance & Tune-Up',
     short: 'Tune-Ups',
     icon: 'tune',

@@ -26,8 +26,8 @@ export default function Faqs() {
   return (
     <>
       <Seo
-        title="Garage Door FAQs | Repair, Springs, Openers & Estimates"
-        description="Answers to common questions about garage door repair, spring replacement, openers, emergency service, free estimates and service in Chicago and Indianapolis."
+        title="Garage Door FAQs | Repairs, Springs & Openers"
+        description="Answers to common questions about garage door repair, spring replacement, openers, emergency service and free estimates in Chicago and Indianapolis."
         path="/faqs"
         jsonLd={[breadcrumbSchema(crumbs), faqSchema(generalFaqs)]}
       />

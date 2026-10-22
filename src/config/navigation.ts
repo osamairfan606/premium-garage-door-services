@@ -30,10 +30,11 @@ export const primaryNav = {
   residential: { label: 'Residential', to: '/services/residential' },
   commercial: { label: 'Commercial', to: '/services/commercial' },
   faqs: { label: 'FAQs', to: '/faqs' },
+  blog: { label: 'Blog', to: '/blog' },
   contact: { label: 'Contact', to: '/contact' },
 };
 
 export const quickLinks: NavLink[] = [
-  primaryNav.home, primaryNav.about, { label: 'All Services', to: '/services' }, primaryNav.faqs,
+  primaryNav.home, primaryNav.about, { label: 'All Services', to: '/services' }, primaryNav.blog, primaryNav.faqs,
   { label: 'Request a Quote', to: '/contact' },
 ];

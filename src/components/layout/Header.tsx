@@ -51,7 +51,7 @@ function NavDropdown({ label, active, children, panelClassName }: { label: strin
   const hoverOpened = useRef(false);
   const ref = useRef<HTMLDivElement>(null);
   const id = useId();
-  const { pathname } = useLocation();
+  const pathname = useLocation().pathname.replace(/(.)\/+$/, '$1');
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -130,7 +130,7 @@ const navItem = ({ isActive }: { isActive: boolean }) =>
 
 export default function Header() {
   const location = useActiveLocation();
-  const { pathname } = useLocation();
+  const pathname = useLocation().pathname.replace(/(.)\/+$/, '$1');
   const scrolled = useScrolled(40);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -205,6 +205,7 @@ export default function Header() {
                   ))}
                 </div>
               </NavDropdown>
+              <NavLink to={primaryNav.blog.to} className={p => cn(navItem(p), 'hidden xl:block')}>{primaryNav.blog.label}</NavLink>
               <NavLink to={primaryNav.faqs.to} className={navItem}>{primaryNav.faqs.label}</NavLink>
               <NavLink to={primaryNav.contact.to} className={navItem}>{primaryNav.contact.label}</NavLink>
             </nav>

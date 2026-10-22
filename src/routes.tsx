@@ -10,6 +10,9 @@ import Faqs from './pages/Faqs';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Terms from './pages/Terms';
+import BlogIndex from './pages/BlogIndex';
+import BlogPost from './pages/BlogPost';
+import { blogPosts } from './lib/blog';
 import { locationList } from './config/locations';
 import { services } from './config/services';
 
@@ -18,6 +21,8 @@ export interface AppRoute {
   element: ReactElement;
   /** Sitemap priority */
   priority: number;
+  /** Sitemap lastmod (YYYY-MM-DD); defaults to the build date */
+  lastmod?: string;
 }
 
 export const appRoutes: AppRoute[] = [
@@ -31,10 +36,12 @@ export const appRoutes: AppRoute[] = [
     { path: `/locations/${l.id}`, element: <LocationPage locationId={l.id} />, priority: 0.95 },
     { path: `/locations/${l.id}/residential`, element: <ResidentialPage locationId={l.id} />, priority: 0.9 },
   ]),
+  { path: '/blog', element: <BlogIndex />, priority: 0.7, lastmod: blogPosts[0]?.date },
+  ...blogPosts.map(p => ({ path: `/blog/${p.slug}`, element: <BlogPost slug={p.slug} />, priority: 0.6, lastmod: p.updated ?? p.date })),
   { path: '/faqs', element: <Faqs />, priority: 0.6 },
   { path: '/contact', element: <Contact />, priority: 0.8 },
   { path: '/privacy-policy', element: <PrivacyPolicy />, priority: 0.2 },
   { path: '/terms', element: <Terms />, priority: 0.2 },
 ];
 
-export const allRoutePaths = appRoutes.map(r => ({ path: r.path, priority: r.priority }));
+export const allRoutePaths = appRoutes.map(r => ({ path: r.path, priority: r.priority, lastmod: r.lastmod }));
