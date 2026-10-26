@@ -82,7 +82,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} {site.legalName}. All rights reserved.</p>
+          <p>© {year} {site.legalName} · Premium Door Services. All rights reserved.</p>
           <ul className="flex gap-6">
             <li><Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link></li>
             <li><Link to="/terms" className="hover:text-white">Terms &amp; Conditions</Link></li>

@@ -30,7 +30,7 @@ export default function About() {
         path="/about"
         jsonLd={[breadcrumbSchema(crumbs)]}
       />
-      <PageHero crumbs={crumbs} eyebrow="About Premium Garage Door" title="Local garage door experts" accent="who finish the job." lead="We’re committed to dependable garage door service with quality workmanship and attention to detail — from repairs to replacements and new installations." image="team-van" imageAlt="Premium Garage Door technicians beside a branded service van">
+      <PageHero crumbs={crumbs} eyebrow="About Premium Garage Door Services" title="Local garage door experts" accent="who finish the job." lead="We’re committed to dependable garage door service with quality workmanship and attention to detail — from repairs to replacements and new installations." image="team-van" imageAlt="Premium Garage Door technicians beside a branded service van">
         <Button to="/contact" size="lg"><CalendarCheck className="h-5 w-5" aria-hidden="true" /> Request a Free Estimate</Button>
         <CallChooser align="left" buttonClassName="h-14 px-7 text-base bg-white/10 text-white shadow-none border border-white/25 hover:bg-white/15" />
       </PageHero>
@@ -41,7 +41,7 @@ export default function About() {
             <SectionHeading eyebrow="Who we are" title={<>Reliable service, <span className="accent-serif text-gold-500">without compromise</span></>} />
             <Reveal className="mt-6 space-y-5 text-lg leading-relaxed text-stone-600">
               <p>
-                Premium Garage Door is a garage door repair, installation and service company. Our experienced service professionals are trained to handle all garage door systems — diagnosing issues accurately and delivering efficient, long-lasting repair and installation solutions.
+                Premium Garage Door Services (Premium Door Services, premiumdoorservices.com) is a garage door repair, installation and service company. Our experienced service professionals are trained to handle all garage door systems — diagnosing issues accurately and delivering efficient, long-lasting repair and installation solutions.
               </p>
               <p>
                 From broken springs and damaged panels to garage door openers and new installations, we provide practical solutions for a wide range of garage door needs. Garage door problems can’t wait, so we offer same-day service whenever possible and a 24/7 line for emergencies.
