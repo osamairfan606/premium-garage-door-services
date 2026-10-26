@@ -6,6 +6,7 @@ import { issueTypes, timeSlots } from '../../config/content';
 import { getLocation, locationList, type LocationId } from '../../config/locations';
 import { submitQuote, isFormEndpointConfigured, type QuotePayload } from '../../lib/submitQuote';
 import { cn } from '../../lib/cn';
+import { track } from '../../lib/analytics';
 
 type Status = 'idle' | 'submitting' | 'success' | 'error' | 'unconfigured';
 type Errors = Partial<Record<keyof FormState, string>>;
@@ -152,6 +153,8 @@ export default function QuoteForm({ defaultLocation, defaultService, lockLocatio
       elapsedMs: Date.now() - mountedAt.current,
     };
     const ok = await submitQuote(payload);
+    // GA4 recommended lead event; no personal data is sent.
+    track(ok ? 'generate_lead' : 'quote_form_error', { form_name: 'quote', location: payload.location, service: payload.service, page_path: payload.page });
     setStatus(ok ? 'success' : 'error');
     requestAnimationFrame(() => statusRef.current?.focus());
   }

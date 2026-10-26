@@ -37,6 +37,8 @@ jobs:
         env:
           VITE_SITE_URL: ${{ vars.VITE_SITE_URL || 'https://premiumdoorservices.com' }}
           VITE_FORM_ENDPOINT: ${{ vars.VITE_FORM_ENDPOINT || '/api/quote.php' }}
+          # Inject GA4 + GTM into the production HTML (see scripts/prerender.mjs).
+          ENABLE_ANALYTICS: 'true'
 
       - name: Check build output
         run: |

@@ -15,9 +15,21 @@ const routeSet = new Set(allRoutePaths.map(r => r.path));
 const withSlash = html =>
   html.replace(/href="(\/[^"#?]*?)([#?][^"]*)?"/g, (m, p, rest = '') => (p !== '/' && !p.endsWith('/') && routeSet.has(p) ? `href="${p}/${rest}"` : m));
 
+// Analytics tags (GA4 + GTM) only for the production build, so local builds and QA never send data.
+const analytics = process.env.ENABLE_ANALYTICS === 'true' ? site.analytics : null;
+const headTags = analytics
+  ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${analytics.ga4MeasurementId}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${analytics.ga4MeasurementId}');</script>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${analytics.gtmContainerId}');</script>`
+  : '';
+const bodyTags = analytics
+  ? `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${analytics.gtmContainerId}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`
+  : '';
+const shell = analytics ? template.replace('<!--app-head-->', `${headTags}\n<!--app-head-->`).replace('<div id="root">', `${bodyTags}<div id="root">`) : template;
+
 function page(url) {
   const { html, head } = render(url);
-  return withSlash(template.replace('<!--app-head-->', head).replace('<!--app-html-->', html));
+  return withSlash(shell.replace('<!--app-head-->', head).replace('<!--app-html-->', html));
 }
 
 for (const { path: route } of allRoutePaths) {
@@ -40,6 +52,10 @@ ${allRoutePaths
 </urlset>
 `;
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap);
-fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${site.url}/sitemap.xml\n`);
+fs.writeFileSync(
+  path.join(DIST, 'robots.txt'),
+  `User-agent: *\nAllow: /\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\nDisallow: /api/\n\nSitemap: ${site.url}/sitemap.xml\n`,
+);
 fs.rmSync(path.join(ROOT, 'dist-ssr'), { recursive: true, force: true });
 console.log(`sitemap: ${allRoutePaths.length} urls`);
+console.log(analytics ? `analytics: GA4 ${analytics.ga4MeasurementId} + GTM ${analytics.gtmContainerId}` : 'analytics: off (ENABLE_ANALYTICS=true turns it on)');

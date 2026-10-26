@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import App from './App';
+import { installClickTracking } from './lib/analytics';
 import './index.css';
 
 const root = document.getElementById('root')!;
@@ -15,6 +16,8 @@ const app = (
     </HelmetProvider>
   </StrictMode>
 );
+
+installClickTracking();
 
 // Prerendered pages are hydrated; the dev server renders from scratch.
 if (root.hasChildNodes()) hydrateRoot(root, app);

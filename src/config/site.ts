@@ -29,6 +29,15 @@ export const site = {
    * Keep false until street addresses are confirmed in locations.ts.
    */
   enableLocalBusinessSchema: false,
+  /**
+   * Existing Google accounts, taken from the old WordPress site's Site Kit and GTM4WP settings.
+   * GA4 = property 538565553 (stream 14930706296). The GTM container holds the Google Ads conversion tags.
+   * Tags are injected only into production builds (ENABLE_ANALYTICS=true); see scripts/prerender.mjs.
+   */
+  analytics: {
+    ga4MeasurementId: 'G-0NK9F4MYSV',
+    gtmContainerId: 'GTM-KF8VBJCM',
+  },
   legal: {
     effectiveDate: 'October 15, 2026',
   },
