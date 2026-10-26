@@ -30,12 +30,13 @@ export const site = {
    */
   enableLocalBusinessSchema: false,
   /**
-   * Existing Google accounts, taken from the old WordPress site's Site Kit and GTM4WP settings.
-   * GA4 = property 538565553 (stream 14930706296). The GTM container holds the Google Ads conversion tags.
+   * GA4 = G-ZOXKPHKR8Q (new property, switched from the old Site Kit property G-0NK9F4MYSV).
+   * GA4 is initialised only here, through gtag in the production HTML; do not also add a GA4 tag in GTM.
+   * GTM-KF8VBJCM holds the Google Ads conversion tags (AW-18188942019) and is unchanged.
    * Tags are injected only into production builds (ENABLE_ANALYTICS=true); see scripts/prerender.mjs.
    */
   analytics: {
-    ga4MeasurementId: 'G-0NK9F4MYSV',
+    ga4MeasurementId: 'G-ZOXKPHKR8Q',
     gtmContainerId: 'GTM-KF8VBJCM',
   },
   legal: {
