@@ -18,7 +18,7 @@ export function TrustStrip() {
                 <Icon name={b.icon} className="h-6 w-6" />
               </span>
               <div>
-                <h3 className="font-sans text-[15px] font-bold tracking-normal text-ink-900">{b.title}</h3>
+                <h2 className="font-sans text-[15px] font-bold tracking-normal text-ink-900">{b.title}</h2>
                 <p className="mt-1 text-sm leading-relaxed text-stone-600">{b.body}</p>
               </div>
             </StaggerItem>
@@ -109,7 +109,7 @@ export function BrandStrip() {
   return (
     <section aria-label="Brands we work with" className="border-y border-stone-200 bg-white py-10">
       <div className="container">
-        <p className="text-center text-[11px] font-semibold uppercase tracking-eyebrow text-stone-500">We work with most major garage door & opener brands</p>
+        <p className="text-center text-[11px] font-semibold uppercase tracking-eyebrow text-stone-600">We work with most major garage door & opener brands</p>
       </div>
       <div className="relative mt-7 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
         <ul className="flex w-max animate-marquee items-center gap-14 hover:[animation-play-state:paused] motion-reduce:w-full motion-reduce:flex-wrap motion-reduce:justify-center">

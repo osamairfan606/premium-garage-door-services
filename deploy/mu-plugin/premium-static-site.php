@@ -16,7 +16,8 @@ if (PHP_SAPI === 'cli' || defined('WP_CLI') || defined('DOING_CRON') || defined(
 function premium_static_serve(string $file, int $status): void {
     http_response_code($status);
     header('Content-Type: text/html; charset=utf-8');
-    header('Cache-Control: public, max-age=0, must-revalidate');
+    // Let GoDaddy's edge cache the page for 10 minutes (browsers revalidate after 1). Each deploy purges the cache.
+    header($status === 200 ? 'Cache-Control: public, max-age=60, s-maxage=600' : 'Cache-Control: no-cache');
     header('X-Content-Type-Options: nosniff');
     header('X-Served-By: premium-static-site');
     if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'HEAD') {

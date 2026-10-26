@@ -14,6 +14,7 @@ import LocationCards from '../components/sections/LocationCards';
 import Gallery from '../components/sections/Gallery';
 import { FaqSection, Reviews } from '../components/sections/Faq';
 import FinalCta from '../components/sections/FinalCta';
+import LatestPosts from '../components/sections/LatestPosts';
 import OfferBanner, { OFFER_TERMS_PATH } from '../components/sections/OfferBanner';
 import { locationList } from '../config/locations';
 import { firstTimeOffer, generalFaqs } from '../config/content';
@@ -52,7 +53,7 @@ function HomeHero() {
             <m.span variants={item} className="accent-serif block text-gold-200">you can trust.</m.span>
           </h1>
           <m.p variants={item} className="mt-7 max-w-xl text-lg leading-relaxed text-white/75 md:text-xl">
-            Broken spring, stuck door or faulty opener? Premium Garage Door provides same-day repair, experienced technicians, honest pricing and 24/7 emergency service for homeowners.
+            Broken spring, stuck door or faulty opener? Premium Garage Door Services provides same-day repair, experienced technicians, honest pricing and 24/7 emergency service in Chicago and Indianapolis.
           </m.p>
           <m.div variants={item} className="mt-10 flex flex-wrap items-center gap-3">
             <Button to="/contact" size="lg">
@@ -133,6 +134,7 @@ export default function Home() {
       <Reviews />
       <Gallery />
       <Process />
+      <LatestPosts />
       <FaqSection faqs={generalFaqs.slice(0, 6)} />
       <FinalCta />
     </>

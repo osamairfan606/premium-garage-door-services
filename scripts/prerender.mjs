@@ -18,9 +18,12 @@ const withSlash = html =>
 // Analytics tags (GA4 + GTM) only for the production build, so local builds and QA never send data.
 const analytics = process.env.ENABLE_ANALYTICS === 'true' ? site.analytics : null;
 const headTags = analytics
-  ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${analytics.ga4MeasurementId}"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${analytics.ga4MeasurementId}');</script>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${analytics.gtmContainerId}');</script>`
+  ? // gtag() and the dataLayer exist immediately, so events are queued; the two Google scripts load after the page
+    // has loaded (or on the first interaction), keeping them off the critical rendering path.
+    `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${analytics.ga4MeasurementId}');dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+(function(){var done=false;function load(){if(done)return;done=true;['https://www.googletagmanager.com/gtag/js?id=${analytics.ga4MeasurementId}','https://www.googletagmanager.com/gtm.js?id=${analytics.gtmContainerId}'].forEach(function(u){var s=document.createElement('script');s.async=true;s.src=u;document.head.appendChild(s);});}
+['pointerdown','keydown','touchstart','scroll'].forEach(function(e){addEventListener(e,load,{once:true,passive:true});});
+addEventListener('load',function(){setTimeout(load,1500);});})();</script>`
   : '';
 const bodyTags = analytics
   ? `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${analytics.gtmContainerId}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`

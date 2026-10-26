@@ -5,6 +5,7 @@ date: 2026-10-22
 image: res-house-dusk
 imageAlt: Two-car garage on a craftsman-style home at dusk
 tags: Maintenance, Winter, Chicago, Indianapolis
+services: maintenance-tune-up, roller-repair
 ---
 
 Cold weather is hard on garage doors. Metal contracts, lubricants thicken, and springs that were already worn are more likely to break on a freezing morning. A little maintenance in the fall helps your door keep working through a Chicago or Indianapolis winter.

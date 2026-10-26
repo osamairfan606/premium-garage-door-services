@@ -7,6 +7,7 @@ image: res-modern-garage
 imageAlt: Modern home with a dark sectional garage door
 tags: Openers, Garage Door Repair, Chicago
 city:
+services: garage-door-opener-repair-installation
 draft: true
 ---
 

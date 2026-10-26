@@ -17,6 +17,8 @@ import { locationList } from '../config/locations';
 import { breadcrumbSchema, faqSchema } from '../lib/seo';
 import { site } from '../config/site';
 import NotFound from './NotFound';
+import { PostCards } from '../components/sections/LatestPosts';
+import { postsForService } from '../lib/blog';
 
 /** Maps service pages to the matching "Service needed" option in the quote form. */
 const formService: Record<string, string> = {
@@ -119,6 +121,14 @@ export default function ServiceDetail({ slug }: { slug: string }) {
       </section>
 
       <Reviews />
+      {postsForService(s.slug).length > 0 && (
+        <section className="section-tight bg-stone-50" aria-labelledby="related-articles">
+          <div className="container">
+            <SectionHeading eyebrow="Helpful guides" title={<span id="related-articles">Related <span className="accent-serif text-gold-500">articles</span></span>} />
+            <div className="mt-8"><PostCards posts={postsForService(s.slug)} /></div>
+          </div>
+        </section>
+      )}
       <FaqSection faqs={s.faqs} eyebrow={`${s.short} FAQs`} title={<>{s.name} <span className="accent-serif text-gold-500">questions</span></>} lead="Quick answers about this service. Can’t find yours? Call your local team any time." />
 
       <section className="section bg-stone-50">

@@ -5,6 +5,7 @@ date: 2026-10-22
 image: res-house-two-storey
 imageAlt: Two-storey home with a white double garage door
 tags: Garage Door Repair, Sensors, Openers
+services: garage-door-repair, off-track-repair, garage-door-opener-repair-installation
 ---
 
 A garage door that won't close leaves your home and belongings exposed, so it is natural to want a quick fix. The good news is that the cause is often simple. Work through the checks below in order, and stop if anything looks damaged or unsafe.

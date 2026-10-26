@@ -5,6 +5,7 @@ date: 2026-10-22
 image: detail-tools
 imageAlt: Garage door technician tools laid out for a spring repair
 tags: Spring Repair, Garage Door Repair, Safety
+services: broken-spring-repair, cable-repair
 ---
 
 A broken spring is one of the most common reasons a garage door suddenly stops working. The springs carry most of the door's weight, so when one breaks the door becomes very heavy, the opener struggles, and the door can drop without warning. If you think a spring has broken, **leave the door closed and do not try to force it open**.

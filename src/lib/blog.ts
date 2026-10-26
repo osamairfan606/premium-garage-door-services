@@ -20,6 +20,8 @@ export interface BlogPost {
   image?: ImageName;
   imageAlt: string;
   tags: string[];
+  /** Service page slugs this post supports; it is listed under "Related articles" on those pages. */
+  services: string[];
   /** Optional: shows the post's call-to-action with that city's number only. */
   city?: LocationId;
   html: string;
@@ -80,6 +82,7 @@ function load(): BlogPost[] {
       image: (data.image as ImageName) || undefined,
       imageAlt: data.imageAlt || data.title,
       tags: list(data.tags),
+      services: list(data.services),
       city: (data.city as LocationId) || undefined,
       html: marked.parse(body, { async: false }) as string,
       readingMinutes: Math.max(1, Math.round(words / 220)),
@@ -91,6 +94,8 @@ function load(): BlogPost[] {
 export const blogPosts = load();
 
 export const getPost = (slug: string) => blogPosts.find(p => p.slug === slug);
+
+export const postsForService = (slug: string, limit = 3) => blogPosts.filter(p => p.services.includes(slug)).slice(0, limit);
 
 export const formatDate = (iso: string) =>
   new Date(`${iso}T12:00:00Z`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' });
