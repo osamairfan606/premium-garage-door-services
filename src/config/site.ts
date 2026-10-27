@@ -29,6 +29,8 @@ export const site = {
    * Keep false until street addresses are confirmed in locations.ts.
    */
   enableLocalBusinessSchema: false,
+  /** IndexNow key (public by design): the deploy pings Bing/IndexNow with changed URLs; the key file is public/<key>.txt. */
+  indexNowKey: 'e57a7f36917cbe37307ca676e911b059',
   /**
    * GA4 = G-ZOXKPHKR8Q (new property, switched from the old Site Kit property G-0NK9F4MYSV).
    * GA4 is initialised only here, through gtag in the production HTML; do not also add a GA4 tag in GTM.

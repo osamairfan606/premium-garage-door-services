@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
 const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
-const { render, allRoutePaths, site } = await import(pathToFileURL(path.join(ROOT, 'dist-ssr', 'entry-server.js')).href);
+const { render, allRoutePaths, site, services, locationList, firstTimeOffer, blogPosts } = await import(pathToFileURL(path.join(ROOT, 'dist-ssr', 'entry-server.js')).href);
 
 // GoDaddy serves each page as a folder and 301s /about to /about/, so internal links in the static HTML
 // point straight at the trailing-slash URL (no redirect hop for visitors or crawlers).
@@ -60,5 +60,36 @@ fs.writeFileSync(
   `User-agent: *\nAllow: /\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\nDisallow: /api/\n\nSitemap: ${site.url}/sitemap.xml\n`,
 );
 fs.rmSync(path.join(ROOT, 'dist-ssr'), { recursive: true, force: true });
+// llms.txt: a plain-language summary for AI assistants and answer engines (llmstxt.org), built only from
+// the same config the site uses, so it never states anything the site itself does not.
+const u = p => `${site.url}${p === '/' ? '/' : `${p}/`}`;
+const llms = `# ${site.brandName}
+
+> ${site.brandName} (${site.legalName}; also known as ${site.alternateNames.filter(n => n !== site.brandName && n !== site.legalName).join(', ')}) is a garage door repair, installation and maintenance company serving ${locationList.map(l => l.label).join(' and ')}. Available 24/7 for emergencies, with same-day service whenever possible and free onsite estimates. Website: ${site.url}/
+
+Each city has its own phone line. Always give the number for the customer's city:
+${locationList.map(l => `- ${l.label}: ${l.phoneDisplay}`).join('\n')}
+
+Serves homeowners (residential) and businesses (commercial overhead doors).
+Offer: ${firstTimeOffer.headline}, applied to the estimate; terms apply (${u('/terms')}#first-time-discount).
+
+## Locations
+${locationList.map(l => `- [Garage door repair in ${l.label}](${u(`/locations/${l.id}`)}): ${l.tagline} Phone ${l.phoneDisplay}.`).join('\n')}
+
+## Services
+${services.map(s => `- [${s.name}](${u(`/services/${s.slug}`)}): ${s.summary}`).join('\n')}
+- [Residential garage door services](${u('/services/residential')})
+- [Commercial garage door services](${u('/services/commercial')}): repairs, openers, maintenance and door replacement for businesses in both cities.
+
+## Guides
+${blogPosts.map(p => `- [${p.title}](${u(`/blog/${p.slug}`)}): ${p.description}`).join('\n')}
+
+## Contact
+- [Request a free estimate](${u('/contact')})
+- [Frequently asked questions](${u('/faqs')})
+- [About ${site.brandName}](${u('/about')})
+`;
+fs.writeFileSync(path.join(DIST, 'llms.txt'), llms);
+
 console.log(`sitemap: ${allRoutePaths.length} urls`);
 console.log(analytics ? `analytics: GA4 ${analytics.ga4MeasurementId} + GTM ${analytics.gtmContainerId}` : 'analytics: off (ENABLE_ANALYTICS=true turns it on)');

@@ -4,8 +4,12 @@ import { HelmetProvider, type HelmetServerState } from 'react-helmet-async';
 import App from './App';
 import { allRoutePaths } from './routes';
 import { site } from './config/site';
+import { services } from './config/services';
+import { locationList } from './config/locations';
+import { firstTimeOffer } from './config/content';
+import { blogPosts } from './lib/blog';
 
-export { allRoutePaths, site };
+export { allRoutePaths, site, services, locationList, firstTimeOffer, blogPosts };
 
 export function render(url: string) {
   const helmetContext: { helmet?: HelmetServerState } = {};

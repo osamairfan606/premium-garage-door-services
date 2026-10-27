@@ -1,4 +1,6 @@
 import { site } from '../config/site';
+import { locationList } from '../config/locations';
+import { services } from '../config/services';
 import type { Location } from '../config/locations';
 import type { FaqItem } from '../config/locations';
 
@@ -21,6 +23,8 @@ export function organizationSchema() {
       { '@type': 'ContactPoint', telephone: '+1-312-626-5158', contactType: 'customer service', areaServed: 'Chicago, IL', availableLanguage: 'English' },
       { '@type': 'ContactPoint', telephone: '+1-463-262-2862', contactType: 'customer service', areaServed: 'Indianapolis, IN', availableLanguage: 'English' },
     ],
+    areaServed: locationList.map(l => ({ '@type': 'City', name: l.city, containedInPlace: { '@type': 'State', name: l.state } })),
+    knowsAbout: [...services.map(s => s.name), 'Commercial garage door repair', 'Emergency garage door repair'],
     ...(site.social.length ? { sameAs: site.social.map(s => s.href) } : {}),
   };
 }
