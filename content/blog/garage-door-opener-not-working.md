@@ -50,6 +50,8 @@ Openers are built to guide a balanced door, not to lift its full weight. If the 
 - The motor hums but the chain or belt does not move
 - It reverses for no reason after the sensors check out
 - It has no safety sensors, or is very old
+
+See [when to replace your garage door opener: 7 signs](/blog/when-to-replace-garage-door-opener/).
 - You want quieter operation, battery backup or smartphone control
 
 ## Get help with your opener

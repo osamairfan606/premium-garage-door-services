@@ -55,4 +55,6 @@ We diagnose the real problem and explain your options honestly. If a repair make
 
 ## Get a free estimate
 
+See [what to expect from a free garage door estimate](/blog/free-garage-door-estimate-what-to-expect/).
+
 Not sure whether to repair or replace? Premium Garage Door Services offers free onsite estimates in Chicago and Indianapolis. [Request yours](/contact/) or call [Chicago](/locations/chicago/) or [Indianapolis](/locations/indianapolis/).

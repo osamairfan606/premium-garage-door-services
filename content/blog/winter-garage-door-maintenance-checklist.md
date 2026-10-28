@@ -22,7 +22,7 @@ Pull the emergency release cord **only with the door fully closed**, then lift t
 
 ### 3. Inspect the springs and cables
 
-Look for gaps in the springs, rust, or frayed cables. **Do not touch them.** If anything looks damaged, book a [spring repair](/services/broken-spring-repair/) or [cable repair](/services/cable-repair/) before the first hard freeze.
+Look for gaps in the springs, rust, or frayed cables. **Do not touch them.** If anything looks damaged, book a [spring repair](/services/broken-spring-repair/) or [cable repair](/services/cable-repair/) before the first hard freeze. Learn [why springs break in cold weather](/blog/why-garage-door-springs-break-in-cold-weather/).
 
 ### 4. Lubricate moving parts
 

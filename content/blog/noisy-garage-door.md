@@ -48,6 +48,8 @@ A loose chain slaps against the rail. Belt-drive openers are much quieter than c
 - **Spring noise and imbalance.** Squealing springs can be lubricated, but a door that pops, jerks or feels heavy needs a balance check.
 - **Opener problems.** Grinding gears or a straining motor are covered in [garage door opener not working](/blog/garage-door-opener-not-working/).
 
+Choosing new rollers? Compare [nylon vs. steel garage door rollers](/blog/nylon-vs-steel-garage-door-rollers/).
+
 ## Why noise matters
 
 Noise often means parts are wearing faster than they should. A yearly [maintenance and tune-up](/services/maintenance-tune-up/) includes lubrication, hardware tightening, a balance test and a safety inspection, so small problems are fixed before they become emergencies.
