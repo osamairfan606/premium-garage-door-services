@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, CalendarCheck, CalendarDays, Clock, Phone } from 'lucide-react';
 import Seo from '../components/Seo';
@@ -5,13 +6,29 @@ import PageHero from '../components/sections/PageHero';
 import Button from '../components/ui/Button';
 import CallChooser from '../components/layout/CallChooser';
 import QuoteSection from '../components/sections/QuoteSection';
-import { blogPosts, formatDate, getPost } from '../lib/blog';
+import { blogPosts, formatDate, getPost, loadPostHtml } from '../lib/blog';
 import { absoluteUrl, breadcrumbSchema } from '../lib/seo';
 import { imageSrc } from '../components/ui/Img';
 import { getLocation } from '../config/locations';
 import { services } from '../config/services';
 import { site } from '../config/site';
 import NotFound from './NotFound';
+
+/**
+ * The post body. The prerendered page already contains it, so on the first load the HTML is
+ * reused from the page; after client-side navigation it is loaded from its own small chunk.
+ */
+function PostBody({ slug, html: ssrHtml }: { slug: string; html?: string }) {
+  const [html, setHtml] = useState(() => {
+    if (ssrHtml !== undefined) return ssrHtml;
+    if (typeof document === 'undefined') return '';
+    return document.querySelector<HTMLElement>(`article[data-post="${slug}"]`)?.innerHTML ?? '';
+  });
+  useEffect(() => {
+    if (!html) loadPostHtml(slug).then(setHtml);
+  }, [slug, html]);
+  return <article data-post={slug} className="article-body max-w-3xl" dangerouslySetInnerHTML={{ __html: html }} />;
+}
 
 export default function BlogPost({ slug }: { slug: string }) {
   const post = getPost(slug);
@@ -57,7 +74,7 @@ export default function BlogPost({ slug }: { slug: string }) {
 
       <section className="section bg-white">
         <div className="container grid gap-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-16">
-          <article className="article-body max-w-3xl" dangerouslySetInnerHTML={{ __html: post.html }} />
+          <PostBody slug={post.slug} html={post.html} />
 
           <aside className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <div className="on-dark rounded-xl bg-ink-900 p-6 text-white">

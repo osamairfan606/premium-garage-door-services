@@ -153,6 +153,31 @@ const errors = [];
   await ctx.close();
 }
 
+// Blog: post HTML is reused from the prerendered page, then loaded per post on client-side navigation
+{
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  page.setDefaultTimeout(90000);
+  page.on('pageerror', e => errors.push(e.message));
+  const consoleErrors = [];
+  page.on('console', m => { if (m.type() === 'error') consoleErrors.push(m.text()); });
+  const first = '/blog/nylon-vs-steel-garage-door-rollers/';
+  await page.goto(BASE + first, { waitUntil: 'networkidle' });
+  const firstText = await page.locator('article[data-post]').innerText();
+  check('Blog post body present after hydration', firstText.includes('Nylon rollers') && firstText.length > 1000, `${firstText.length} chars`);
+  check('Blog post hydrates without console errors', consoleErrors.length === 0, consoleErrors.join(' | '));
+  // A React link outside the article (links inside the Markdown body are plain <a> and reload the page).
+  const next = page.locator(`main a[href^="/blog/"]:not(article a):not([href="/blog/"]):not([href="${first}"])`).first();
+  await page.evaluate(() => { window.__noReload = true; });
+  const href = await next.getAttribute('href');
+  await next.click();
+  await page.waitForURL(u => u.pathname.replace(/\/$/, '') === href.replace(/\/$/, ''));
+  await page.waitForFunction(slug => (document.querySelector(`article[data-post="${slug}"]`)?.textContent ?? '').length > 500, href.split('/')[2]);
+  const nextText = await page.locator('article[data-post]').innerText();
+  const clientSide = await page.evaluate(() => window.__noReload === true);
+  check('Blog post body loads after client-side navigation', clientSide && nextText.length > 500 && !nextText.includes('Nylon rollers have a nylon wheel'), href);
+  await page.close();
+}
+
 check('No runtime errors during interactions', errors.length === 0, errors.join(' | '));
 await browser.close();
 server.kill();
