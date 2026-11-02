@@ -10,6 +10,7 @@ import { WhyChooseUs, Process } from '../components/sections/Highlights';
 import { FaqSection, Reviews } from '../components/sections/Faq';
 import QuoteSection from '../components/sections/QuoteSection';
 import FinalCta from '../components/sections/FinalCta';
+import { CityGuides } from '../components/sections/LatestPosts';
 import Img from '../components/ui/Img';
 import { locations, otherLocation, type LocationId } from '../config/locations';
 import { breadcrumbSchema, faqSchema, locationSchema } from '../lib/seo';
@@ -108,6 +109,7 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
       <Reviews locationId={loc.id} />
       <Process />
       <FaqSection faqs={loc.faqs} location={loc} eyebrow={`${loc.city} FAQs`} title={<>Garage door questions in <span className="accent-serif text-gold-500">{loc.city}</span></>} lead={`Answers for homeowners in ${loc.label}.`} />
+      <CityGuides city={loc.id} cityName={loc.city} />
       <QuoteSection location={loc} />
 
       <section className="bg-stone-50 py-10">

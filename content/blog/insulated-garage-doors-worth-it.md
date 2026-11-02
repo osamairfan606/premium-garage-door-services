@@ -52,6 +52,8 @@ Replacing worn seals is often a quick win on its own. Our [winter maintenance ch
 
 If your current door is in good shape, better weatherstripping may be enough. If it is dented, drafty or near the end of its life, a new insulated door can solve several problems at once. Our guide to [repairing or replacing a garage door](/blog/repair-or-replace-garage-door/) can help you decide.
 
+Choosing a style? Compare [carriage-style vs. modern garage doors](/blog/carriage-house-vs-modern-garage-doors/).
+
 ## Talk to us about an insulated door
 
 Premium Garage Door Services installs new garage doors in Chicago and Indianapolis, with a free onsite estimate on new doors. We will help you compare insulation, style and price. [Garage door installation](/services/garage-door-installation/) · [Request a free estimate](/contact/)

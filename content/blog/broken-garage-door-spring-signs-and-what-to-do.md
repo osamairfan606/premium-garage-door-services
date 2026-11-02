@@ -60,6 +60,8 @@ Most spring repairs are completed in a single visit.
 - Watch for a door that feels heavy or closes unevenly. These are early signs of wear.
 - Book a yearly [maintenance and tune-up](/services/maintenance-tune-up/) so worn parts are caught early.
 
+Wondering how long new springs will last? See [how long do garage door springs last?](/blog/how-long-do-garage-door-springs-last/)
+
 ## Need help with a broken spring?
 
 Premium Garage Door Services offers same-day spring repair whenever possible and 24/7 emergency help in both cities. Call [our Chicago team](/locations/chicago/) or [our Indianapolis team](/locations/indianapolis/), or [request a free onsite estimate](/contact/).

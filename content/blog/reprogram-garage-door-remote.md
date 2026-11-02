@@ -50,6 +50,8 @@ Many cars have built-in garage door buttons. Pairing them usually needs a workin
 
 If the remote works but the door will not close, the problem is likely the safety sensors. See [why a garage door won't close](/blog/garage-door-wont-close-common-causes/).
 
+Keypad giving trouble? See [garage door keypad not working? 7 things to check](/blog/garage-door-keypad-not-working/).
+
 ## Need help?
 
 Our technicians program remotes and keypads, fix range problems and install new openers in Chicago and Indianapolis. [Opener repair and installation](/services/garage-door-opener-repair-installation/) · [Request a free estimate](/contact/)

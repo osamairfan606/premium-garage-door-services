@@ -50,8 +50,16 @@ const errors = [];
   await page.goto(BASE + '/services/residential', { waitUntil: 'networkidle' });
   const tabpanel = page.locator('[role="tabpanel"]').first();
   const before = await tabpanel.locator('a[href^="tel:"]').first().getAttribute('href');
-  await page.getByRole('tab', { name: 'Indianapolis, IN' }).first().click();
-  await page.waitForTimeout(700);
+  // Wait for the number to change instead of a fixed delay; retry the click in case it landed before hydration.
+  const indyTab = page.getByRole('tab', { name: 'Indianapolis, IN' }).first();
+  for (let attempt = 0; attempt < 3; attempt++) {
+    await indyTab.click();
+    const swapped = await page.waitForFunction(
+      () => document.querySelector('[role="tabpanel"] a[href^="tel:"]')?.getAttribute('href') === 'tel:+14632622862',
+      null, { timeout: 5000 },
+    ).then(() => true, () => false);
+    if (swapped) break;
+  }
   const after = await page.locator('[role="tabpanel"]').first().locator('a[href^="tel:"]').first().getAttribute('href');
   check('Location switcher swaps number', before === 'tel:+13126265158' && after === 'tel:+14632622862', `${before} → ${after}`);
 

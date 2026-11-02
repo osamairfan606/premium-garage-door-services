@@ -44,6 +44,8 @@ If the door looks uneven, moves very slowly or the opener strains, a spring or c
 
 Older openers can lose force, strip gears or develop circuit-board faults. If the motor hums but nothing moves, or the opener is many years old, it may be time to repair or replace it. See our [garage door opener repair and installation](/services/garage-door-opener-repair-installation/) service.
 
+Door stuck shut instead? See [garage door won't open? causes and what to do](/blog/garage-door-wont-open/).
+
 ## When to call a professional
 
 Call a technician if:

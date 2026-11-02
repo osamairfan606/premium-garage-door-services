@@ -53,6 +53,8 @@ Our [garage door installation](/services/garage-door-installation/) service star
 
 We diagnose the real problem and explain your options honestly. If a repair makes sense, we recommend the repair. If replacement is the better long-term choice, we explain why and help you pick a door that fits your home and budget.
 
+Planning a new door? See [how long garage door installation takes](/blog/how-long-does-garage-door-installation-take/).
+
 ## Get a free estimate
 
 See [what to expect from a free garage door estimate](/blog/free-garage-door-estimate-what-to-expect/).

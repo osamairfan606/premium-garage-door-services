@@ -53,6 +53,8 @@ Check whether the opener or kit works with the voice assistants, smart-home syst
 
 Smart features cannot fix a door that is out of balance. A door with worn springs or cables strains any opener, smart or not. A technician should check the door's balance, springs and rollers when installing a new opener.
 
+More ways to protect your home: [garage door security tips](/blog/garage-door-security-tips/).
+
 ## Smart opener installation
 
 Premium Garage Door Services installs and repairs garage door openers in Chicago and Indianapolis, and can set up remotes, keypads and safety sensors. [Opener repair and installation](/services/garage-door-opener-repair-installation/) · [Request a free estimate](/contact/)

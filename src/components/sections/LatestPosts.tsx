@@ -4,6 +4,7 @@ import SectionHeading from '../ui/SectionHeading';
 import Img from '../ui/Img';
 import { Stagger, StaggerItem } from '../ui/Reveal';
 import { blogPosts, formatDate, type BlogPost } from '../../lib/blog';
+import type { LocationId } from '../../config/locations';
 
 /** Post cards; used for "Latest tips" on the home page and "Related articles" on service pages. */
 export function PostCards({ posts }: { posts: BlogPost[] }) {
@@ -37,6 +38,25 @@ export default function LatestPosts() {
       <div className="container">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading eyebrow="Garage door tips" title={<span id="latest-tips">Latest from our <span className="accent-serif text-gold-500">blog</span></span>} />
+          <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-600 hover:text-ink-900">
+            All articles <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
+        <div className="mt-10"><PostCards posts={posts} /></div>
+      </div>
+    </section>
+  );
+}
+
+/** "Guides for <city> homeowners" on location pages: the city's own posts first, then the latest. */
+export function CityGuides({ city, cityName }: { city: LocationId; cityName: string }) {
+  const posts = [...blogPosts.filter(p => p.city === city), ...blogPosts.filter(p => !p.city)].slice(0, 3);
+  if (!posts.length) return null;
+  return (
+    <section className="section bg-stone-50" aria-labelledby="city-guides">
+      <div className="container">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading eyebrow="Garage door tips" title={<span id="city-guides">Guides for <span className="accent-serif text-gold-500">{cityName}</span> homeowners</span>} />
           <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold-600 hover:text-ink-900">
             All articles <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
