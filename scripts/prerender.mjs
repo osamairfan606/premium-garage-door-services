@@ -55,9 +55,17 @@ ${allRoutePaths
 </urlset>
 `;
 fs.writeFileSync(path.join(DIST, 'sitemap.xml'), sitemap);
+// WordPress still runs behind the static site, and every request to one of its dynamic URLs (login, feeds,
+// search, old ?p= links) boots PHP. GoDaddy's gateway allows only a few origin connections at a time and
+// answers 503 when they are busy, so crawlers are kept off these URLs to save those connections for real pages.
+const robotsDisallow = [
+  '/wp-admin/', '/wp-login.php', '/xmlrpc.php', '/wp-json/', '/wp-includes/', '/api/',
+  '/feed/', '/*/feed/', '/comments/', '/author/', '/trackback/',
+  '/*?s=', '/*?p=', '/*?page_id=', '/*?attachment_id=', '/*?replytocom=',
+];
 fs.writeFileSync(
   path.join(DIST, 'robots.txt'),
-  `User-agent: *\nAllow: /\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\nDisallow: /api/\n\nSitemap: ${site.url}/sitemap.xml\n`,
+  `User-agent: *\nAllow: /\n${robotsDisallow.map(p => `Disallow: ${p}`).join('\n')}\nAllow: /wp-admin/admin-ajax.php\n\nSitemap: ${site.url}/sitemap.xml\n`,
 );
 fs.rmSync(path.join(ROOT, 'dist-ssr'), { recursive: true, force: true });
 // llms.txt: a plain-language summary for AI assistants and answer engines (llmstxt.org), built only from
