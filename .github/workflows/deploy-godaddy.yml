@@ -114,15 +114,32 @@ jobs:
           echo $id ? "CDN invalidation requested: $id" : 'CDN invalidation not started', PHP_EOL;
           PHP
 
-      # Tell Bing (and other IndexNow engines) about the site's URLs right away. Bing's index also feeds
-      # ChatGPT search and Copilot. The key file /<key>.txt is part of the build; failures never block a deploy.
+      # GoDaddy's gateway allows only a few origin connections at a time and answers 503 when they are busy.
+      # Right after the purge every page is uncached, so fetch them one at a time before crawlers are pinged.
+      - name: Warm the cache
+        run: |
+          sleep 30  # let the CDN invalidation finish
+          ok=0; slow=0
+          for u in $(grep -oE '<loc>[^<]+' dist/sitemap.xml | sed 's/<loc>//'); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "$u" || true)
+            if [ "$code" = 200 ]; then ok=$((ok+1)); else slow=$((slow+1)); echo "warm: $u -> $code"; fi
+            sleep 1
+          done
+          echo "Cache warm-up: $ok pages OK, $slow not OK"
+
+      # Tell Bing (and other IndexNow engines) about pages whose HTML changed in this deploy. Bing's index also
+      # feeds ChatGPT search and Copilot. The key file /<key>.txt is part of the build; failures never block a deploy.
       - name: Notify IndexNow
         if: inputs.environment == 'production'
         run: |
           KEY=$(ls dist | grep -E '^[0-9a-f]{32}\.txt$' | head -1 | sed 's/\.txt$//')
           [ -n "$KEY" ] || { echo "::warning::No IndexNow key file in the build"; exit 0; }
           HOST=$(echo "$SITE_URL" | sed -E 's#^https?://##; s#/.*$##')
-          URLS=$(grep -oE '<loc>[^<]+' dist/sitemap.xml | sed 's/<loc>//' | jq -R . | jq -s -c .)
+          # plan.txt (dry run) lists every file the upload added or replaced; keep the pages that are in the sitemap.
+          grep '^>f' plan.txt | cut -c13- | grep -E '(^|/)index\.html$' | sed -E "s#index\.html\$##; s#^#$SITE_URL/#" | sort -u > changed.txt || true
+          grep -oE '<loc>[^<]+' dist/sitemap.xml | sed 's/<loc>//' | sort -u > sitemap-urls.txt
+          [ -s changed.txt ] && [ -n "$(comm -12 changed.txt sitemap-urls.txt)" ] || { echo "IndexNow: no page HTML changed; nothing to submit"; exit 0; }
+          URLS=$(comm -12 changed.txt sitemap-urls.txt | jq -R . | jq -s -c .)
           BODY=$(jq -n -c --arg host "$HOST" --arg key "$KEY" --arg loc "$SITE_URL/$KEY.txt" --argjson urls "$URLS" '{host:$host,key:$key,keyLocation:$loc,urlList:$urls}')
           code=$(curl -s -o /dev/null -w '%{http_code}' -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' -d "$BODY")
           echo "IndexNow: submitted $(echo "$URLS" | jq length) URLs, HTTP $code (200/202 = accepted)"
