@@ -32,13 +32,13 @@ export const site = {
   /** IndexNow key (public by design): the deploy pings Bing/IndexNow with changed URLs; the key file is public/<key>.txt. */
   indexNowKey: 'e57a7f36917cbe37307ca676e911b059',
   /**
-   * GA4 = G-ZOXKPHKR8Q (new property, switched from the old Site Kit property G-0NK9F4MYSV).
+   * GA4 = G-Z0XKPHKR8Q (new property, switched from the old Site Kit property G-0NK9F4MYSV).
    * GA4 is initialised only here, through gtag in the production HTML; do not also add a GA4 tag in GTM.
    * GTM-KF8VBJCM holds the Google Ads conversion tags (AW-18188942019) and is unchanged.
    * Tags are injected only into production builds (ENABLE_ANALYTICS=true); see scripts/prerender.mjs.
    */
   analytics: {
-    ga4MeasurementId: 'G-ZOXKPHKR8Q',
+    ga4MeasurementId: 'G-Z0XKPHKR8Q',
     gtmContainerId: 'GTM-KF8VBJCM',
   },
   legal: {
