@@ -69,7 +69,7 @@ export function locationSchema(loc: Location, serviceType = 'Garage door repair 
     serviceType,
     url: absoluteUrl(path),
     areaServed: { '@type': 'City', name: loc.city, containedInPlace: { '@type': 'State', name: loc.state } },
-    provider: { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.name, telephone: loc.phoneE164 },
+    provider: { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.brandName, alternateName: site.alternateNames.filter(n => n !== site.brandName), telephone: loc.phoneE164 },
     hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
   };
 }

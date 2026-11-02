@@ -66,7 +66,7 @@ export const locations: Record<LocationId, Location> = {
     imageAlt: 'Chicago skyline at dusk',
     tagline: 'Garage door repair and installation for Chicago homes.',
     overview: [
-      'Premium Garage Door brings the same promise to Chicago that customers have come to expect from us: honest pricing, free onsite estimates and a team that does not leave until your door works the way it should.',
+      'Premium Garage Door Services, also known as Premium Door Services, brings the same promise to Chicago that customers have come to expect from us: honest pricing, free onsite estimates and a team that does not leave until your door works the way it should.',
       'Whether a spring has snapped on a cold morning, your opener has stopped responding, or you are ready to replace a tired door with something new, one call to our Chicago line connects you with a technician who can help — 24 hours a day, 7 days a week.',
     ],
     climateNote: {
@@ -74,6 +74,10 @@ export const locations: Record<LocationId, Location> = {
       body: 'Sub-freezing mornings make metal contract and lubricants stiffen, which puts extra strain on torsion springs, cables and openers. A seasonal tune-up before winter is one of the simplest ways to avoid being stuck with a door that will not open.',
     },
     faqs: [
+      {
+        q: 'Is Premium Door Services the same company as Premium Garage Door Services in Chicago?',
+        a: 'Yes. Premium Garage Door Services is also known as Premium Door Services. In Chicago, call (312) 626-5158 or request a free estimate on this website.',
+      },
       {
         q: 'Which phone number should I call for garage door service in Chicago?',
         a: 'Call our Chicago line at (312) 626-5158. It is available 24/7 for emergencies such as broken springs, stuck doors and opener failures.',
@@ -134,7 +138,7 @@ export const locations: Record<LocationId, Location> = {
     imageAlt: 'Indianapolis skyline at sunset',
     tagline: 'Garage door repair and installation for Indianapolis homes.',
     overview: [
-      'Premium Garage Door serves Indianapolis homeowners with fast, dependable garage door repair, opener service and new door installation — backed by free onsite estimates and our satisfaction guarantee.',
+      'Premium Garage Door Services (also known as Premium Door Services) serves Indianapolis homeowners with fast, dependable garage door repair, opener service and new door installation — backed by free onsite estimates and our satisfaction guarantee.',
       'From a door that has slipped off its track to a full replacement, our Indianapolis line is answered 24/7, and same-day service is offered whenever possible.',
     ],
     climateNote: {
@@ -142,6 +146,10 @@ export const locations: Record<LocationId, Location> = {
       body: 'Freeze–thaw cycles in winter and humid summers both take a toll on garage doors: springs and cables fatigue, rollers wear, and weather seals harden. Regular maintenance keeps your door balanced and quiet year-round.',
     },
     faqs: [
+      {
+        q: 'Is Premium Door Services the same company as Premium Garage Door Services in Indianapolis?',
+        a: 'Yes. Premium Garage Door Services is also known as Premium Door Services. In Indianapolis, call (463) 262-2862 or request a free estimate on this website.',
+      },
       {
         q: 'Which phone number should I call for garage door service in Indianapolis?',
         a: 'Call our Indianapolis line at (463) 262-2862. It is available 24/7 for urgent problems such as broken springs, stuck doors and opener failures.',

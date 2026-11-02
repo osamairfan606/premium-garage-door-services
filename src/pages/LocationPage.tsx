@@ -14,18 +14,22 @@ import { CityGuides } from '../components/sections/LatestPosts';
 import Img from '../components/ui/Img';
 import { locations, otherLocation, type LocationId } from '../config/locations';
 import { breadcrumbSchema, faqSchema, locationSchema } from '../lib/seo';
+import { site } from '../config/site';
 
 export default function LocationPage({ locationId }: { locationId: LocationId }) {
   const loc = locations[locationId];
   const other = otherLocation(loc.id);
   const path = `/locations/${loc.id}`;
   const crumbs = [{ label: 'Home', to: '/' }, { label: 'Locations', to: '/#locations' }, { label: loc.label, to: path }];
+  // Brand + city in the title for searches such as "premium garage door services chicago"; keep it within 60 characters.
+  const brandTitle = `Garage Door Repair ${loc.city} | ${site.brandName}`;
+  const title = brandTitle.length <= 60 ? brandTitle : `${site.brandName} ${loc.city} | 24/7 Repair`;
 
   return (
     <>
       <Seo
-        title={`Garage Door Repair ${loc.city}, ${loc.stateCode} | 24/7 · ${loc.phoneDisplay}`}
-        description={`Garage door repair, spring replacement, openers and installation in ${loc.label}. Same-day service whenever possible. Call ${loc.phoneDisplay}.`}
+        title={title}
+        description={`${site.brandName} (Premium Door Services) in ${loc.label}: 24/7 garage door repair, springs, openers and new doors. Call ${loc.phoneDisplay}.`}
         path={path}
         jsonLd={[breadcrumbSchema(crumbs), locationSchema(loc), faqSchema(loc.faqs)]}
       />
@@ -65,7 +69,7 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
       <section className="section bg-white">
         <div className="container grid gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-20">
           <div>
-            <SectionHeading eyebrow={`Serving ${loc.city}`} title={<>Your local garage door team in <span className="accent-serif text-gold-500">{loc.city}</span></>} />
+            <SectionHeading eyebrow={`Your local garage door team in ${loc.city}`} title={<>{site.brandName} in <span className="accent-serif text-gold-500">{loc.city}</span></>} />
             <Reveal className="mt-6 space-y-5 text-lg leading-relaxed text-stone-600">
               {loc.overview.map(p => <p key={p.slice(0, 24)}>{p}</p>)}
             </Reveal>
