@@ -43,7 +43,7 @@ These items are deliberately left empty or configurable. The original site did n
 - **Service areas, ZIP codes and street addresses** (`locations.ts`). While these are empty, the site says "Chicago and nearby communities — call to confirm".
 - **Customer reviews** (`content.ts → reviews`). A reviews section is placed on the Home, About, Services, Residential, Location and Service pages. It stays hidden until genuine reviews are added, and reviews tagged with a `location` only show on that city’s pages.
 - **Social media profiles** (`site.ts → social`). These stay hidden while the list is empty.
-- **LocalBusiness schema** (`site.ts → enableLocalBusinessSchema`). This is off until verified addresses exist. In the meantime, location pages emit `Service` and `Organization` schema with the location-specific phone numbers.
+- **Street address in the LocalBusiness schema.** Each city page emits a `HomeAndConstructionBusiness` entity with that city's phone, 24/7 hours and `areaServed`. The `address` is added automatically once `locations.ts → address` holds a verified address (it should match the Google Business Profile).
 - **Legal pages.** These are general templates and should be reviewed by a lawyer.
 - **Photography.** Images marked `stock` in `src/config/images.generated.ts` are Pexels-licensed stock photos (disclosed in the Terms page). To replace them with real project photos:
   1. Drop the photos into `assets-src/company/`.

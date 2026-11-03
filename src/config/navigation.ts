@@ -1,5 +1,6 @@
 import { locationList } from './locations';
 import { services } from './services';
+import { cityServiceKinds } from './cityServices';
 
 export interface NavLink {
   label: string;
@@ -20,7 +21,8 @@ export const locationsMenu = locationList.map(l => ({
   links: [
     { label: `${l.city} Service Area`, to: `/locations/${l.id}` },
     { label: `${l.city} Residential`, to: `/locations/${l.id}/residential` },
-    { label: `${l.city} Commercial`, to: `/services/commercial#${l.id}` },
+    { label: `${l.city} Emergency Repair`, to: `/locations/${l.id}/${cityServiceKinds.emergency.slug}` },
+    { label: `${l.city} Commercial`, to: `/locations/${l.id}/${cityServiceKinds.commercial.slug}` },
   ],
 }));
 

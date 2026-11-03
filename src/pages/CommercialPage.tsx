@@ -1,4 +1,5 @@
-import { CalendarCheck, Check, Info, MapPin, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ArrowRight, CalendarCheck, Check, Info, MapPin, Phone } from 'lucide-react';
 import Seo from '../components/Seo';
 import PageHero from '../components/sections/PageHero';
 import Button from '../components/ui/Button';
@@ -12,6 +13,7 @@ import QuoteSection from '../components/sections/QuoteSection';
 import FinalCta from '../components/sections/FinalCta';
 import { commercialCopy } from '../config/content';
 import { locationList } from '../config/locations';
+import { cityServicePath } from '../config/cityServices';
 import { breadcrumbSchema, faqSchema } from '../lib/seo';
 
 const SERVICE = 'Commercial Door Service';
@@ -98,6 +100,9 @@ export default function CommercialPage() {
                         <li key={p} className="flex gap-2.5 text-stone-700"><Check className="mt-0.5 h-5 w-5 shrink-0 text-gold-500" aria-hidden="true" /> {p}</li>
                       ))}
                     </ul>
+                    <Link to={cityServicePath({ city: l.id, kind: 'commercial' })} className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-gold-600 hover:text-ink-900">
+                      Commercial garage door repair in {l.city} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
                     <div className="mt-7 grid gap-3 sm:grid-cols-2">
                       <a href={l.phoneHref} data-location={l.id} className="flex items-center justify-center gap-2 rounded-md bg-gold-400 px-4 py-3 font-semibold text-ink-900 tabular-nums transition hover:bg-gold-300" aria-label={`Call ${l.city}: ${l.phoneDisplay}`}>
                         <Phone className="h-4 w-4" aria-hidden="true" /> {l.phoneDisplay}

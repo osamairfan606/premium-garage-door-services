@@ -24,11 +24,6 @@ export const site = {
   social: [] as { label: string; href: string }[],
   /** Optional public contact email. Leave empty to hide. */
   email: '',
-  /**
-   * LocalBusiness structured data requires a verified physical address.
-   * Keep false until street addresses are confirmed in locations.ts.
-   */
-  enableLocalBusinessSchema: false,
   /** IndexNow key (public by design): the deploy pings Bing/IndexNow with changed URLs; the key file is public/<key>.txt. */
   indexNowKey: 'e57a7f36917cbe37307ca676e911b059',
   /**

@@ -7,7 +7,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
 const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
-const { render, allRoutePaths, site, services, locationList, firstTimeOffer, blogPosts } = await import(pathToFileURL(path.join(ROOT, 'dist-ssr', 'entry-server.js')).href);
+const { render, allRoutePaths, site, services, locationList, firstTimeOffer, blogPosts, cityServiceKinds, cityServicePath, cityServicePages } = await import(pathToFileURL(path.join(ROOT, 'dist-ssr', 'entry-server.js')).href);
 
 // GoDaddy serves each page as a folder and 301s /about to /about/, so internal links in the static HTML
 // point straight at the trailing-slash URL (no redirect hop for visitors or crawlers).
@@ -83,6 +83,9 @@ Offer: ${firstTimeOffer.headline}, applied to the estimate; terms apply (${u('/t
 
 ## Locations
 ${locationList.map(l => `- [Garage door repair in ${l.label}](${u(`/locations/${l.id}`)}): ${l.tagline} Phone ${l.phoneDisplay}.`).join('\n')}
+
+## Services by city
+${cityServicePages.map(p => `- [${cityServiceKinds[p.kind].name} in ${locationList.find(l => l.id === p.city).label}](${u(cityServicePath(p))}): ${p.description}`).join('\n')}
 
 ## Services
 ${services.map(s => `- [${s.name}](${u(`/services/${s.slug}`)}): ${s.summary}`).join('\n')}

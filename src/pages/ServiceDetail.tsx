@@ -14,6 +14,7 @@ import QuoteSection from '../components/sections/QuoteSection';
 import FinalCta from '../components/sections/FinalCta';
 import { getService, services } from '../config/services';
 import { locationList } from '../config/locations';
+import { cityServiceKinds, cityServicePath, kindForService } from '../config/cityServices';
 import { breadcrumbSchema, faqSchema } from '../lib/seo';
 import { site } from '../config/site';
 import NotFound from './NotFound';
@@ -39,6 +40,7 @@ export default function ServiceDetail({ slug }: { slug: string }) {
   const path = `/services/${s.slug}`;
   const crumbs = [{ label: 'Home', to: '/' }, { label: 'Services', to: '/services' }, { label: s.name, to: path }];
   const related = s.related.map(r => services.find(x => x.slug === r)!).filter(Boolean);
+  const cityKind = kindForService[s.slug];
 
   return (
     <>
@@ -113,6 +115,11 @@ export default function ServiceDetail({ slug }: { slug: string }) {
                   <Link to={`/locations/${l.id}/residential`} className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold capitalize text-white transition hover:border-gold-300">
                     {l.city} residential <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
                   </Link>
+                  {cityKind && (
+                    <Link to={cityServicePath({ city: l.id, kind: cityKind })} className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-4 py-2.5 text-sm font-semibold text-white transition hover:border-gold-300">
+                      {cityServiceKinds[cityKind].name} in {l.city} <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
+                    </Link>
+                  )}
                 </div>
               </StaggerItem>
             ))}

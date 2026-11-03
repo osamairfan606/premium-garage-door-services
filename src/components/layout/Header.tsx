@@ -16,16 +16,16 @@ function AnnouncementBar({ location }: { location?: Location }) {
   if (!site.offers24x7Emergency) return null;
   return (
     <div className="border-b border-white/5 bg-ink-900 text-[13px] text-white/75">
-      <div className="container flex h-9 items-center justify-center gap-3 sm:justify-between">
+      <div className={cn('container flex h-9 items-center gap-3 sm:justify-between', location ? 'justify-between' : 'justify-center')}>
         <p className="flex items-center gap-2">
           <Clock3 className="h-3.5 w-3.5 text-gold-300" aria-hidden="true" />
           <span>
-            <span className="font-semibold text-white">24/7 emergency garage door service</span>
+            <span className="font-semibold text-white">24/7 emergency<span className={location ? 'hidden sm:inline' : undefined}> garage door service</span></span>
             <span className="hidden sm:inline"> · Same-day service whenever possible · Free onsite estimates</span>
           </span>
         </p>
         <AnimatePresence mode="wait" initial={false}>
-          <m.p key={location?.id ?? 'all'} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }} className="hidden items-center gap-4 sm:flex">
+          <m.p key={location?.id ?? 'all'} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.25 }} className={cn('items-center gap-4', location ? 'flex' : 'hidden sm:flex')}>
             {location ? (
               <a href={location.phoneHref} data-location={location.id} className="font-semibold text-gold-200 tabular-nums transition hover:text-white">
                 {location.city}: {location.phoneDisplay}

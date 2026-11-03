@@ -5,6 +5,7 @@ import ServicesPage from './pages/Services';
 import ResidentialPage from './pages/ResidentialPage';
 import CommercialPage from './pages/CommercialPage';
 import LocationPage from './pages/LocationPage';
+import CityServicePage from './pages/CityServicePage';
 import ServiceDetail from './pages/ServiceDetail';
 import Faqs from './pages/Faqs';
 import Contact from './pages/Contact';
@@ -15,6 +16,7 @@ import BlogPost from './pages/BlogPost';
 import { blogPosts } from './lib/blog';
 import { locationList } from './config/locations';
 import { services } from './config/services';
+import { cityServicePath, cityServicesFor } from './config/cityServices';
 
 export interface AppRoute {
   path: string;
@@ -35,6 +37,7 @@ export const appRoutes: AppRoute[] = [
   ...locationList.flatMap(l => [
     { path: `/locations/${l.id}`, element: <LocationPage locationId={l.id} />, priority: 0.95 },
     { path: `/locations/${l.id}/residential`, element: <ResidentialPage locationId={l.id} />, priority: 0.9 },
+    ...cityServicesFor(l.id).map(p => ({ path: cityServicePath(p), element: <CityServicePage city={p.city} kind={p.kind} />, priority: 0.85 })),
   ]),
   { path: '/blog', element: <BlogIndex />, priority: 0.7, lastmod: blogPosts[0]?.date },
   ...blogPosts.map(p => ({ path: `/blog/${p.slug}`, element: <BlogPost slug={p.slug} />, priority: 0.6, lastmod: p.updated ?? p.date })),

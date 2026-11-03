@@ -42,35 +42,59 @@ export function websiteSchema() {
   };
 }
 
+const allWeek = { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' };
+
+const cityAreaServed = (loc: Location) => [
+  { '@type': 'City', name: loc.city, containedInPlace: { '@type': 'State', name: loc.state } },
+  ...loc.serviceAreas.map(name => ({ '@type': 'Place', name: `${name}, ${loc.stateCode}` })),
+];
+
+const businessId = (loc: Location) => `${absoluteUrl(`/locations/${loc.id}`)}#business`;
+
 /**
- * Location-level structured data. Uses a Service entity (no address required).
- * A full LocalBusiness entity is emitted only when site.enableLocalBusinessSchema is true
- * AND the location has a verified address.
+ * The city branch as a LocalBusiness (HomeAndConstructionBusiness) for the city page: phone, 24/7 hours and
+ * areaServed. It is a service-area business, so the street address is added only once loc.address is verified.
  */
+export function localBusinessSchema(loc: Location, offers: { name: string; path: string }[] = []) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HomeAndConstructionBusiness',
+    '@id': businessId(loc),
+    name: site.brandName,
+    alternateName: site.alternateNames.filter(n => n !== site.brandName),
+    url: absoluteUrl(`/locations/${loc.id}`),
+    telephone: loc.phoneE164,
+    image: `${site.url}/og-image.jpg`,
+    logo: `${site.url}/images/logo-480.png`,
+    openingHoursSpecification: [allWeek],
+    areaServed: cityAreaServed(loc),
+    ...(loc.address
+      ? { address: { '@type': 'PostalAddress', streetAddress: loc.address.street, addressLocality: loc.address.city, addressRegion: loc.address.region, postalCode: loc.address.postalCode, addressCountry: 'US' } }
+      : {}),
+    ...(offers.length
+      ? {
+          hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: `Garage door services in ${loc.city}`,
+            itemListElement: offers.map(o => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: o.name, url: absoluteUrl(o.path) } })),
+          },
+        }
+      : {}),
+    parentOrganization: { '@id': `${site.url}/#organization` },
+  };
+}
+
+/** A service offered in one city, provided by that city's LocalBusiness entity. */
 export function locationSchema(loc: Location, serviceType = 'Garage door repair and installation', path = `/locations/${loc.id}`) {
-  if (site.enableLocalBusinessSchema && loc.address) {
-    return {
-      '@context': 'https://schema.org',
-      '@type': 'HomeAndConstructionBusiness',
-      name: `${site.name} — ${loc.city}`,
-      url: absoluteUrl(path),
-      telephone: loc.phoneE164,
-      image: `${site.url}/og-image.jpg`,
-      openingHours: 'Mo-Su 00:00-23:59',
-      address: { '@type': 'PostalAddress', streetAddress: loc.address.street, addressLocality: loc.address.city, addressRegion: loc.address.region, postalCode: loc.address.postalCode, addressCountry: 'US' },
-      areaServed: { '@type': 'City', name: `${loc.city}, ${loc.stateCode}` },
-      parentOrganization: { '@id': `${site.url}/#organization` },
-    };
-  }
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
     name: `${serviceType} in ${loc.city}, ${loc.stateCode}`,
     serviceType,
     url: absoluteUrl(path),
-    areaServed: { '@type': 'City', name: loc.city, containedInPlace: { '@type': 'State', name: loc.state } },
-    provider: { '@type': 'Organization', '@id': `${site.url}/#organization`, name: site.brandName, alternateName: site.alternateNames.filter(n => n !== site.brandName), telephone: loc.phoneE164 },
-    hoursAvailable: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '00:00', closes: '23:59' },
+    areaServed: cityAreaServed(loc),
+    provider: { '@type': 'HomeAndConstructionBusiness', '@id': businessId(loc), name: site.brandName, telephone: loc.phoneE164, url: absoluteUrl(`/locations/${loc.id}`) },
+    hoursAvailable: allWeek,
   };
 }
 

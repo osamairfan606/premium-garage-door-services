@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, CalendarCheck, Clock3, MapPin, Phone, Snowflake } from 'lucide-react';
+import { ArrowRight, CalendarCheck, MapPin, Phone, Snowflake } from 'lucide-react';
 import Seo from '../components/Seo';
 import PageHero from '../components/sections/PageHero';
 import Button from '../components/ui/Button';
@@ -11,9 +11,12 @@ import { FaqSection, Reviews } from '../components/sections/Faq';
 import QuoteSection from '../components/sections/QuoteSection';
 import FinalCta from '../components/sections/FinalCta';
 import { CityGuides } from '../components/sections/LatestPosts';
+import CityCallCard from '../components/sections/CityCallCard';
+import CityServiceLinks from '../components/sections/CityServiceLinks';
+import { cityServiceKinds, cityServicePath, cityServicesFor } from '../config/cityServices';
 import Img from '../components/ui/Img';
 import { locations, otherLocation, type LocationId } from '../config/locations';
-import { breadcrumbSchema, faqSchema, locationSchema } from '../lib/seo';
+import { breadcrumbSchema, faqSchema, localBusinessSchema } from '../lib/seo';
 import { site } from '../config/site';
 
 export default function LocationPage({ locationId }: { locationId: LocationId }) {
@@ -31,7 +34,11 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
         title={title}
         description={`${site.brandName} (Premium Door Services) in ${loc.label}: 24/7 garage door repair, springs, openers and new doors. Call ${loc.phoneDisplay}.`}
         path={path}
-        jsonLd={[breadcrumbSchema(crumbs), locationSchema(loc), faqSchema(loc.faqs)]}
+        jsonLd={[
+          breadcrumbSchema(crumbs),
+          localBusinessSchema(loc, cityServicesFor(loc.id).map(p => ({ name: `${cityServiceKinds[p.kind].name} in ${loc.city}`, path: cityServicePath(p) }))),
+          faqSchema(loc.faqs),
+        ]}
       />
       <PageHero
         size="lg"
@@ -42,20 +49,7 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
         lead={`${loc.tagline} Free onsite estimates, honest pricing and 24/7 emergency service for broken springs, stuck doors and opener failures.`}
         image={loc.heroImage}
         imageAlt={loc.imageAlt}
-        aside={
-          <div className="on-dark rounded-lg border border-white/10 bg-ink-900/70 p-6 backdrop-blur-xl md:p-7">
-            <p className="text-[11px] font-semibold uppercase tracking-eyebrow text-white/50">{loc.city} service line</p>
-            <a href={loc.phoneHref} data-location={loc.id} className="mt-2 flex items-center gap-3 font-display text-4xl font-semibold text-white tabular-nums transition hover:text-gold-200" aria-label={`Call ${loc.city}: ${loc.phoneDisplay}`}>
-              {loc.phoneDisplay}
-            </a>
-            <p className="mt-3 flex items-center gap-2 text-sm text-white/60"><Clock3 className="h-4 w-4 text-gold-300" aria-hidden="true" /> Open 24/7 · Same-day service whenever possible</p>
-            <div className="mt-6">
-              <Link to={`${path}/residential`} className="flex items-center justify-between rounded-md border border-white/15 px-4 py-3 text-sm font-semibold text-white transition hover:border-gold-300">
-                Residential services <ArrowRight className="h-4 w-4 text-gold-300" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-        }
+        aside={<CityCallCard loc={loc} links={[{ label: 'Residential services', to: `${path}/residential` }, { label: `Emergency repair in ${loc.city}`, to: `${path}/${cityServiceKinds.emergency.slug}` }]} />}
       >
         <Button href={loc.phoneHref} size="lg" aria-label={`Call ${loc.city}: ${loc.phoneDisplay}`}>
           <Phone className="h-5 w-5" aria-hidden="true" /> Call {loc.phoneDisplay}
@@ -108,6 +102,7 @@ export default function LocationPage({ locationId }: { locationId: LocationId })
         </div>
       </section>
 
+      <CityServiceLinks loc={loc} />
       <ServicesGrid dark eyebrow={`Services in ${loc.city}`} title={<>Garage door services in <span className="accent-serif text-gold-200">{loc.city}</span></>} lead={`Every service below is available to homeowners in ${loc.label}. Call ${loc.phoneDisplay} for same-day help whenever possible.`} />
       <WhyChooseUs cityLabel={loc.city} />
       <Reviews locationId={loc.id} />

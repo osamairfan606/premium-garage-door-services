@@ -8,8 +8,9 @@ import { services } from './config/services';
 import { locationList } from './config/locations';
 import { firstTimeOffer } from './config/content';
 import { blogPosts } from './lib/blog';
+import { cityServiceKinds, cityServicePath, cityServicePages } from './config/cityServices';
 
-export { allRoutePaths, site, services, locationList, firstTimeOffer, blogPosts };
+export { allRoutePaths, site, services, locationList, firstTimeOffer, blogPosts, cityServiceKinds, cityServicePath, cityServicePages };
 
 export function render(url: string) {
   const helmetContext: { helmet?: HelmetServerState } = {};
